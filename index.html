@@ -3,293 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S-PANEL | SINGULARITY v50</title>
+    <title>S-PANEL | GOD MODE v57</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #377dff; --bg: #050608; --card-bg: #0f131a; 
-            --text-main: #f8fafc; --text-muted: #95aac9; --border: #1e293b;
-            --danger: #ff4d4d; --success: #00d97e; --gold: #f1c40f;
+            --bg: #030303; --sidebar: #0a0a0c; --surface: #121216; 
+            --primary: #6366f1; --border: #1f1f23; --text: #ffffff; 
+            --text-dim: #6b7280; --success: #10b981; --danger: #ef4444; --god: #f59e0b;
         }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; }
-        
-        /* SIDEBAR */
-        .sidebar { width: 280px; background: var(--card-bg); border-right: 1px solid var(--border); padding: 30px; display: flex; flex-direction: column; z-index: 100; }
-        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-        .content-scroll { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
-        
-        /* COMPONENTS */
-        .card { background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); padding: 25px; margin-bottom: 25px; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-item { padding: 16px; cursor: pointer; border-radius: 14px; color: var(--text-muted); font-weight: 600; margin-bottom: 10px; transition: 0.2s; display: flex; align-items: center; gap: 12px; }
-        .nav-item:hover { background: rgba(55,125,255,0.1); color: var(--text-main); }
-        .nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(55,125,255,0.3); }
-        
-        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 12px; border: 1px solid var(--border); background: #161b22; color: white; outline: none; box-sizing: border-box; }
-        .btn-pro { background: var(--primary); color: white; border: none; padding: 16px; border-radius: 14px; cursor: pointer; width: 100%; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
-        .btn-pro:active { transform: scale(0.98); }
-        
-        /* ADMIN STYLING */
-        .admin-only { border-left: 5px solid var(--gold); background: rgba(241, 196, 15, 0.05); }
-        .feed-box { font-family: 'Consolas', monospace; font-size: 12px; background: #000; padding: 15px; border-radius: 12px; height: 200px; overflow-y: auto; color: var(--success); border: 1px solid var(--border); }
-        .broadcast-banner { background: var(--gold); color: black; padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; left: 280px; right: 0; z-index: 1000; text-transform: uppercase; }
-        
-        /* MISC */
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.15s ease; }
+        body { margin: 0; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+        /* GOD MODE SPECIFIC UI */
+        .god-badge { background: linear-gradient(45deg, #f59e0b, #ef4444); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 900; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .status-online { background: var(--success); box-shadow: 0 0 10px var(--success); }
+        .status-offline { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
+
+        /* LAYOUT */
+        .sidebar { width: 260px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 24px; }
+        .main { flex: 1; overflow-y: auto; padding: 40px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
+        .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+        /* BUTTONS */
+        .btn { padding: 12px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; display: inline-block; font-size: 13px; width: 100%; }
+        .btn-god { background: var(--god); color: black; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-danger { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid var(--danger); }
+
+        input, select, textarea { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border); border-radius: 10px; color: white; margin-top: 5px; outline: none; margin-bottom: 10px; }
         .hidden { display: none !important; }
-        .badge { padding: 5px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; }
-        .badge-success { background: rgba(0,217,126,0.1); color: var(--success); }
-        .badge-danger { background: rgba(255,77,77,0.1); color: var(--danger); }
-        
-        /* LOGIN */
-        #loginOverlay { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .login-card { width: 350px; text-align: center; padding: 40px; background: var(--card-bg); border-radius: 30px; border: 1px solid var(--border); }
+        #authScreen { position: fixed; inset: 0; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-<div id="bcBanner" class="broadcast-banner hidden"></div>
-
-<div id="loginOverlay">
-    <div class="login-card">
-        <h1 style="color:var(--primary); margin:0;">S-PANEL</h1>
-        <p style="color:var(--text-muted); font-size:12px; margin-bottom:30px;">SINGULARITY EDITION v50</p>
-        <input type="text" id="loginUser" placeholder="Enter Username">
-        <button class="btn-pro" onclick="auth()">INITIALIZE</button>
+<div id="authScreen">
+    <div style="width: 350px; text-align: center; background: var(--surface); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
+        <h1 style="margin:0; letter-spacing:-1px;">NEXUS <span style="color:var(--god)">57</span></h1>
+        <p style="color:var(--text-dim); font-size:12px; margin-bottom:30px;">Professional God-Mode Terminal</p>
+        <input type="text" id="authU" placeholder="Username">
+        <input type="password" id="authP" placeholder="Password">
+        <button class="btn btn-primary" onclick="login()">AUTHORIZE SESSION</button>
     </div>
 </div>
 
-<div id="dashboard">
+<div id="app" class="hidden" style="width:100%; display:flex;">
     <aside class="sidebar">
-        <div style="font-weight:900; color:var(--primary); font-size:26px; margin-bottom:30px;">⚡ NEXUS</div>
-        <div class="card" style="padding:20px; background: linear-gradient(135deg, var(--primary), #1a4eb2); border:none;">
-            <small style="opacity:0.8; font-weight:bold;">WALLET</small>
-            <div style="font-size:32px; font-weight:900;">$<span id="userBal">0.00</span></div>
-        </div>
-        <nav id="nav">
-            <div class="nav-item active" onclick="nav('market', this)">🌍 Marketplace</div>
-            <div class="nav-item" onclick="nav('promo', this)">🎟️ Promo Codes</div>
-            <div class="nav-item" onclick="nav('support', this)">🎧 Support Tickets</div>
-            <div class="nav-item" onclick="nav('api', this)">🔑 Developer API</div>
+        <div style="font-size:20px; font-weight:800; margin-bottom:40px;">⚡ SYSTEM <span style="color:var(--primary)">.</span></div>
+        <nav>
+            <div class="nav-item" style="padding:10px; cursor:pointer;" onclick="tab('market')">🛒 Market</div>
+            <div class="nav-item" style="padding:10px; cursor:pointer;" onclick="tab('news')">📢 News</div>
+            <div class="nav-item" style="padding:10px; cursor:pointer;" onclick="tab('history')">📜 Ledger</div>
+            <div id="godTab" class="hidden" style="margin-top:30px; border-top:1px solid var(--border); padding-top:20px;">
+                <p style="font-size:10px; font-weight:900; color:var(--god);">DIVINE ACCESS</p>
+                <div class="nav-item" style="color:var(--god); padding:10px; cursor:pointer;" onclick="tab('god')">👑 GOD MODE</div>
+            </div>
         </nav>
-        <div style="margin-top:auto">
-            <button class="btn-pro" style="background:var(--danger)" onclick="location.reload()">TERMINATE</button>
-        </div>
+        <button class="btn btn-danger" style="margin-top:auto" onclick="location.reload()">TERMINATE</button>
     </aside>
 
-    <main class="main-content">
-        <div class="content-scroll">
-            
-            <div id="page-market">
-                <h2>Buy SMS Verification</h2>
-                <div class="card">
-                    <label>Select Country</label>
+    <main class="main">
+        <div id="view-market">
+            <div class="bento">
+                <div class="card" style="grid-column: span 2;">
+                    <h3>Initialize Number</h3>
                     <select id="selCountry"></select>
-                    <label>Select Service</label>
                     <select id="selSvc"></select>
-                    <button class="btn-pro" onclick="purchase()">GENERATE NUMBER</button>
+                    <button class="btn btn-primary" onclick="buy()">ORDER ACCESS</button>
                 </div>
-                <h3>Active Sessions</h3>
-                <div id="activeOrders"></div>
-            </div>
-
-            <div id="page-promo" class="hidden">
-                <h2>Redeem Voucher</h2>
-                <div class="card">
-                    <input type="text" id="promoIn" placeholder="Enter Code">
-                    <button class="btn-pro" style="background:var(--success)" onclick="redeem()">APPLY VOUCHER</button>
+                <div class="card" style="background:var(--primary);">
+                    <p style="font-size:11px; font-weight:800; opacity:0.7;">TOTAL VAULT</p>
+                    <h1 id="bal" style="font-size:48px; margin:0;">$0.00</h1>
                 </div>
             </div>
-
-            <div id="page-support" class="hidden">
-                <h2>Help & Support</h2>
-                <div class="card">
-                    <textarea id="ticketIn" placeholder="How can we help you?"></textarea>
-                    <button class="btn-pro" onclick="openTicket()">SUBMIT TICKET</button>
-                </div>
-                <h3>Your Tickets</h3>
-                <div id="ticketList"></div>
-            </div>
-
-            <div id="page-api" class="hidden">
-                <h2>API Documentation</h2>
-                <div class="card">
-                    <p>Connect your automation bots via our REST API.</p>
-                    <div id="apiKeyDisp" style="background:#000; padding:15px; border-radius:12px; color:var(--success); font-family:monospace;">NOT_GENERATED</div>
-                    <button class="btn-pro" style="margin-top:15px;" onclick="genAPI()">GENERATE NEW KEY</button>
-                </div>
-            </div>
-
-            <div id="page-admin" class="hidden">
-                <h2 style="color:var(--gold)">👑 OVERLORD SINGULARITY</h2>
-                
-                <div class="card admin-only">
-                    <h4>LIVE AUDIT STREAM</h4>
-                    <div id="admFeed" class="feed-box"></div>
-                </div>
-
-                <div class="card admin-only">
-                    <h4>BROADCAST ENGINE</h4>
-                    <input type="text" id="bcMsg" placeholder="Global announcement...">
-                    <button class="btn-pro" onclick="setBC()">SEND TO ALL USERS</button>
-                </div>
-
-                <div class="card admin-only">
-                    <h4>USER BALANCE MODERATOR</h4>
-                    <input type="text" id="admTarget" placeholder="Username">
-                    <input type="number" id="admModAmt" placeholder="Amount (e.g. 50 or -50)">
-                    <button class="btn-pro" onclick="modUserBal()">ADJUST BALANCE</button>
-                </div>
-
-                <div class="card admin-only">
-                    <h4>PROMO CODE FACTORY</h4>
-                    <input type="text" id="admPCode" placeholder="CODE">
-                    <input type="number" id="admPVal" placeholder="Value ($)">
-                    <input type="number" id="admPMax" placeholder="Max Uses">
-                    <button class="btn-pro" onclick="createPromo()">CREATE CODE</button>
-                </div>
-                
-                <div class="card admin-only">
-                    <h4>TICKET QUEUE</h4>
-                    <div id="admTickets"></div>
-                </div>
-            </div>
-
+            <div id="activeBox" style="margin-top:20px;"></div>
         </div>
+
+        <div id="view-god" class="hidden">
+            <h1 style="color:var(--god)">Divine Command Center</h1>
+            <div class="bento">
+                <div class="card">
+                    <h4>Global Wealth Control</h4>
+                    <input type="text" id="gU" placeholder="Username">
+                    <input type="number" id="gA" placeholder="Amount (+/-)">
+                    <button class="btn btn-god" onclick="godBal()">FORCE BALANCE</button>
+                </div>
+                <div class="card">
+                    <h4>Service Integrity</h4>
+                    <select id="gSvcList"></select>
+                    <button class="btn btn-primary" onclick="toggleSvc(true)">ONLINE</button>
+                    <button class="btn btn-danger" style="margin-top:5px" onclick="toggleSvc(false)">OFFLINE</button>
+                </div>
+                <div class="card">
+                    <h4>System Nuclear Option</h4>
+                    <button class="btn btn-danger" onclick="wipeDB()">WIPE ALL USER DATA</button>
+                    <button class="btn btn-god" style="margin-top:5px" onclick="exportMaster()">EXPORT MASTER AUDIT</button>
+                </div>
+            </div>
+            <div class="card">
+                <h4>Master Transaction Stream (Live)</h4>
+                <div style="max-height:300px; overflow-y:auto;" id="masterTx"></div>
+            </div>
+        </div>
+
+        <div id="view-news" class="hidden"><h1>News Feed</h1><div id="newsHub"></div></div>
+        <div id="view-history" class="hidden"><h1>My History</h1><div class="card" id="userTx"></div></div>
     </main>
 </div>
 
 <script>
-    let cur = null;
-    let db = JSON.parse(localStorage.getItem('SPANEL_V50')) || {
-        users: {}, promos: {}, countries: ['India', 'USA', 'Russia', 'UK'],
-        services: [{n:'Telegram', p:0.6}, {n:'WhatsApp', p:0.4}, {n:'Instagram', p:0.2}],
-        bc: "", logs: [], tickets: []
+    let user = null, active = null;
+    let db = JSON.parse(localStorage.getItem('GOD_MODE_V57')) || {
+        users: { 'sh1vx': { p: 'admin123', b: 5000, role: 'admin', tx: [] } },
+        svcs: { 'Telegram': { p: 0.85, s: true }, 'WhatsApp': { p: 0.45, s: true }, 'Instagram': { p: 0.35, s: true } },
+        countries: ['India', 'USA', 'UK'],
+        news: [{ t: 'Protocol 57 Loaded', c: 'God Mode features finalized. Service kill-switches active.', d: '2026-03-16' }]
     };
 
-    function auth() {
-        let u = document.getElementById('loginUser').value.trim().toLowerCase();
-        if(!u) return;
-        if(!db.users[u]) db.users[u] = { bal: (u==='sh1vx'?5000:0), usedP: [], key: 'None' };
-        cur = u;
-        if(u === 'sh1vx') document.getElementById('nav').innerHTML += `<div class="nav-item" style="color:var(--gold)" onclick="nav('admin', this)">👑 Overlord</div>`;
-        document.getElementById('loginOverlay').classList.add('hidden');
-        document.getElementById('dashboard').style.display = 'flex';
-        checkBC(); sync();
+    function login() {
+        let u = document.getElementById('authU').value.trim().toLowerCase(), p = document.getElementById('authP').value;
+        if(!db.users[u]) { db.users[u] = { p, b: 0, role: 'user', tx: [] }; save(); }
+        if(db.users[u].p === p) {
+            user = u; document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            if(db.users[u].role === 'admin') document.getElementById('godTab').classList.remove('hidden');
+            sync();
+        } else { alert("Invalid Credentials"); }
     }
 
     function sync() {
-        document.getElementById('userBal').innerText = db.users[cur].bal.toFixed(2);
+        document.getElementById('bal').innerText = "$" + db.users[user].b.toFixed(2);
         document.getElementById('selCountry').innerHTML = db.countries.map(c => `<option>${c}</option>`).join('');
-        document.getElementById('selSvc').innerHTML = db.services.map(s => `<option value="${s.p}">${s.n} ($${s.p})</option>`).join('');
-        document.getElementById('apiKeyDisp').innerText = db.users[cur].key;
-        renderTickets();
-        if(cur === 'sh1vx') renderAdmin();
-    }
-
-    function log(m) {
-        db.logs.unshift(`[${new Date().toLocaleTimeString()}] ${m}`);
-        if(db.logs.length > 50) db.logs.pop();
-        save(); if(cur==='sh1vx') renderAdmin();
-    }
-
-    function purchase() {
-        let s = db.services[document.getElementById('selSvc').selectedIndex];
-        if(db.users[cur].bal < s.p) return alert("Low Funds");
-        db.users[cur].bal -= s.p;
-        let num = "+" + (Math.floor(Math.random()*9000000000)+1000000000);
-        log(`PURCHASE: ${cur} bought ${s.n} (${num})`);
         
-        let div = document.createElement('div'); div.className='card';
-        div.innerHTML = `<b>${num}</b><br><small>Awaiting SMS...</small>`;
-        document.getElementById('activeOrders').prepend(div);
-        
-        setTimeout(() => {
-            let otp = Math.floor(100000+Math.random()*899999);
-            div.innerHTML = `<b>${num}</b> | OTP: <span style="color:var(--success); font-weight:bold;">${otp}</span>`;
-            log(`SUCCESS: ${cur} received OTP for ${num}`);
-        }, 5000);
-        sync();
+        // Populate Market & God Svc List
+        let svcHTML = "";
+        for(let [n, d] of Object.entries(db.svcs)) {
+            let status = d.s ? `<span class="status-dot status-online"></span>` : `<span class="status-dot status-offline"></span>`;
+            svcHTML += `<option value="${n}" ${!d.s ? 'disabled' : ''}>${n} ($${d.p.toFixed(2)}) ${!d.s ? '[MAINTENANCE]' : ''}</option>`;
+        }
+        document.getElementById('selSvc').innerHTML = svcHTML;
+        document.getElementById('gSvcList').innerHTML = Object.keys(db.svcs).map(n => `<option>${n}</option>`).join('');
+
+        // Master Tx Stream (God Mode)
+        if(db.users[user].role === 'admin') {
+            let allTx = [];
+            for(let u in db.users) db.users[u].tx.forEach(t => allTx.push({u, ...t}));
+            document.getElementById('masterTx').innerHTML = allTx.sort((a,b) => b.id-a.id).map(t => `<div style="padding:10px; border-bottom:1px solid #1f1f23; font-size:12px;"><b>${t.u.toUpperCase()}</b>: ${t.m} ($${t.a.toFixed(2)}) <span style="color:var(--text-dim)">${t.d}</span></div>`).join('');
+        }
+
+        // News & Personal History
+        document.getElementById('newsHub').innerHTML = db.news.map(n => `<div class="card"><h4>${n.t}</h4><p>${n.c}</p></div>`).reverse().join('');
+        document.getElementById('userTx').innerHTML = db.users[user].tx.map(t => `<div style="padding:10px; border-bottom:1px solid #1f1f23;">${t.m} - $${t.a.toFixed(2)}</div>`).reverse().join('');
     }
 
-    function redeem() {
-        let c = document.getElementById('promoIn').value.toUpperCase();
-        let p = db.promos[c];
-        if(!p || p.used >= p.max || db.users[cur].usedP.includes(c)) return alert("Invalid/Used");
-        db.users[cur].bal += p.val;
-        db.users[cur].usedP.push(c);
-        p.used++;
-        log(`PROMO: ${cur} used ${c} (+$${p.val})`);
-        sync(); alert("Funds Added!");
+    function buy() {
+        if(active) return alert("Finish active order.");
+        let n = document.getElementById('selSvc').value, p = db.svcs[n].p;
+        if(db.users[user].b < p) return alert("Insufficient Balance");
+        db.users[user].b -= p;
+        active = { n, p, num: "+1 888 " + Math.floor(100+Math.random()*899) + " " + Math.floor(1000+Math.random()*8999) };
+        log('DEBIT', `Purchased ${n} access`, p);
+        renderOrder(); sync();
     }
 
-    function openTicket() {
-        let msg = document.getElementById('ticketIn').value;
-        if(!msg) return;
-        db.tickets.push({user:cur, msg, reply:"", id:Date.now()});
-        log(`TICKET: ${cur} opened a new support request`);
-        alert("Ticket Sent");
-        sync();
+    function renderOrder() {
+        const box = document.getElementById('activeBox');
+        if(!active) { box.innerHTML = ''; return; }
+        box.innerHTML = `<div class="card" style="border: 2px solid var(--primary);">
+            <div style="display:flex; justify-content:space-between;">
+                <div><small>VIRTUAL NUMBER</small><h1>${active.num}</h1><p style="color:var(--success)">● Monitoring SMS...</p></div>
+                <div><button class="btn btn-danger" onclick="cancel()">CANCEL & REFUND</button> <button class="btn btn-primary" style="margin-top:5px" onclick="active=null;buy()">RE-CYCLE</button></div>
+            </div>
+        </div>`;
     }
 
-    function renderTickets() {
-        let my = db.tickets.filter(t => t.user === cur);
-        document.getElementById('ticketList').innerHTML = my.map(t => `<div class="card"><small>Ticket ID: ${t.id}</small><br><b>You:</b> ${t.msg}<br><span style="color:var(--gold)"><b>Admin:</b> ${t.reply || 'Waiting for reply...'}</span></div>`).join('');
+    function cancel() {
+        db.users[user].b += active.p;
+        log('CREDIT', `Refunded ${active.n}`, active.p);
+        active = null; renderOrder(); sync();
     }
 
-    function renderAdmin() {
-        document.getElementById('admFeed').innerHTML = db.logs.map(l => `<div>${l}</div>`).join('');
-        document.getElementById('admTickets').innerHTML = db.tickets.filter(t => !t.reply).map(t => `
-            <div class="card">
-                <b>User: ${t.user}</b><br>${t.msg}<br>
-                <input type="text" id="rep${t.id}" placeholder="Your reply...">
-                <button class="btn-pro" onclick="replyTicket(${t.id})">Send Reply</button>
-            </div>`).join('') || "No open tickets";
+    // GOD MODE FUNCTIONS
+    function godBal() {
+        let u = document.getElementById('gU').value.toLowerCase(), a = parseFloat(document.getElementById('gA').value);
+        if(db.users[u]) { db.users[u].b += a; logOther(u, 'DIVINE_ADJUST', `Admin modified balance`, a); sync(); alert("Success"); }
     }
 
-    function replyTicket(id) {
-        let r = document.getElementById('rep'+id).value;
-        let t = db.tickets.find(x => x.id === id);
-        if(t) t.reply = r;
-        log(`ADMIN: Replied to Ticket #${id}`);
-        save(); sync();
+    function toggleSvc(state) {
+        let s = document.getElementById('gSvcList').value;
+        db.svcs[s].s = state; save(); sync(); alert(`${s} is now ${state?'ONLINE':'OFFLINE'}`);
     }
 
-    function modUserBal() {
-        let u = document.getElementById('admTarget').value.toLowerCase();
-        let a = parseFloat(document.getElementById('admModAmt').value);
-        if(db.users[u]) { db.users[u].bal += a; log(`ADMIN: Adjusted ${u} bal by ${a}`); save(); sync(); alert("Done"); }
+    function wipeDB() {
+        if(confirm("DANGER: This wipes ALL user data. Only Admin credentials survive. Proceed?")) {
+            let adminSave = db.users['sh1vx'];
+            db.users = { 'sh1vx': adminSave };
+            save(); sync(); location.reload();
+        }
     }
 
-    function createPromo() {
-        let c = document.getElementById('admPCode').value.toUpperCase();
-        db.promos[c] = { val: parseFloat(document.getElementById('admPVal').value), max: parseInt(document.getElementById('admPMax').value), used: 0 };
-        log(`ADMIN: Created Promo ${c}`); save(); alert("Promo Active");
+    function exportMaster() {
+        let data = "GOD MODE MASTER AUDIT\n" + JSON.stringify(db, null, 2);
+        let blob = new Blob([data], {type: "text/plain"});
+        let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = "master_audit.txt"; a.click();
     }
 
-    function setBC() {
-        db.bc = document.getElementById('bcMsg').value;
-        log(`ADMIN: Set Global Broadcast: ${db.bc}`);
-        save(); checkBC();
+    function log(t, m, a) { 
+        db.users[user].tx.push({ id: Date.now(), d: new Date().toLocaleTimeString(), t, m, a }); 
+        save(); 
+    }
+    
+    function logOther(u, t, m, a) {
+        db.users[u].tx.push({ id: Date.now(), d: new Date().toLocaleTimeString(), t, m, a });
+        save();
     }
 
-    function checkBC() {
-        let b = document.getElementById('bcBanner');
-        if(db.bc) { b.innerText = "📢 " + db.bc; b.classList.remove('hidden'); }
-        else b.classList.add('hidden');
+    function tab(v) {
+        document.querySelectorAll('.main > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById('view-'+v).classList.remove('hidden');
     }
-
-    function genAPI() {
-        db.users[cur].key = "KEY-" + Math.random().toString(36).substr(2,12).toUpperCase();
-        save(); sync();
-    }
-
-    function nav(p, el) {
-        document.querySelectorAll('.content-scroll > div').forEach(d => d.classList.add('hidden'));
-        document.getElementById('page-'+p).classList.remove('hidden');
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        el.classList.add('active');
-    }
-
-    function save() { localStorage.setItem('SPANEL_V50', JSON.stringify(db)); }
+    function save() { localStorage.setItem('GOD_MODE_V57', JSON.stringify(db)); }
 </script>
 </body>
 </html>
