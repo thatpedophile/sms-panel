@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S-PANEL | Elite v28</title>
+    <title>S-PANEL | Elite Pro v29</title>
     <style>
         :root { 
             --primary: #377dff; --bg: #f0f2f5; --card-bg: #ffffff; 
@@ -16,30 +16,28 @@
         }
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; }
 
-        /* LIQUID GLASS LOGIN */
+        /* LIQUID GLASS LOGIN PAGE */
         #loginOverlay { 
             position: fixed; inset: 0; z-index: 9999; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%), url('https://www.transparenttextures.com/patterns/cubes.png');
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e), url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
             display: flex; justify-content: center; align-items: center; 
         }
         .login-card { 
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px) saturate(200%);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px; border-radius: 30px; width: 340px; text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 45px; border-radius: 40px; width: 350px; text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
-        .login-card h2 { color: white; margin-bottom: 20px; font-weight: 900; letter-spacing: 1px; }
-        .login-card input { background: rgba(255,255,255,0.2); border: none; color: white; transition: 0.3s; }
-        .login-card input::placeholder { color: rgba(255,255,255,0.6); }
-        .login-card input:focus { background: rgba(255,255,255,0.3); }
+        .login-card h2 { color: #fff; font-weight: 900; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
+        .login-card input { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #fff; margin-bottom: 15px; }
+        .login-card input::placeholder { color: rgba(255,255,255,0.5); }
 
         #dashboard { display: none; height: 100vh; }
         .sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
         .main-content { flex: 1; padding: 0 30px 30px 30px; overflow-y: auto; scroll-behavior: smooth; }
-        .ticker-wrap { background: var(--card-bg); border-bottom: 1px solid var(--border); overflow: hidden; white-space: nowrap; padding: 12px 0; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
-        .ticker { display: inline-block; animation: marquee 30s linear infinite; font-weight: 700; color: var(--primary); font-size: 13px; }
+        .ticker-wrap { background: var(--card-bg); border-bottom: 1px solid var(--border); overflow: hidden; padding: 12px 0; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
+        .ticker { display: inline-block; animation: marquee 30s linear infinite; font-weight: 700; color: var(--primary); font-size: 13px; white-space: nowrap; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
         .card { background: var(--card-bg); border-radius: 18px; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; position: relative; }
@@ -65,10 +63,10 @@
 
 <div id="loginOverlay">
     <div class="login-card">
-        <h2>S-PANEL v28</h2>
+        <h2>S-PANEL PRO</h2>
         <input type="text" id="loginKey" placeholder="Username">
         <input type="password" id="loginPass" placeholder="Password">
-        <button class="btn-pro" style="background: white; color: #764ba2; margin-top: 15px;" onclick="auth()">Sign In</button>
+        <button class="btn-pro" style="background: #fff; color: #302b63;" onclick="auth()">ACCESS SYSTEM</button>
     </div>
 </div>
 
@@ -76,49 +74,50 @@
     <aside class="sidebar">
         <div style="font-weight: 900; color: var(--primary); font-size: 24px; margin-bottom: 25px;">⚡ S-PANEL</div>
         <div style="background: var(--primary); color: white; padding: 22px; border-radius: 20px; margin-bottom: 30px;">
-            <div style="font-size: 10px; opacity: 0.8; font-weight: 800;">YOUR BALANCE</div>
+            <div style="font-size: 10px; opacity: 0.8; font-weight: 800;">TOTAL FUNDS</div>
             <div style="font-size: 32px; font-weight: 900;">$<span id="balDisplay">0.00</span></div>
             <div id="userDisplay" style="font-size: 11px; font-weight: 600;">User: ---</div>
         </div>
         <nav id="navMenu" style="flex-grow: 1;">
-            <div id="marketTab" class="nav-item active" onclick="show('market', this)">🌍 Marketplace</div>
-            <div class="nav-item" onclick="show('funds', this)">💳 Add Funds</div>
-            <div class="nav-item" onclick="show('logs', this)">📜 Order Logs</div>
+            <div id="marketTab" class="nav-item active" onclick="show('market', this)">🌍 Services</div>
+            <div class="nav-item" onclick="show('funds', this)">💳 Wallet</div>
+            <div class="nav-item" onclick="show('logs', this)">📜 Logs</div>
         </nav>
-        <button class="btn-pro" style="background:var(--gold); color:black; margin-bottom: 10px;" onclick="toggleTheme()">🌓 Theme</button>
-        <button class="btn-pro" style="background:var(--danger);" onclick="location.reload()">Log Out</button>
+        <button class="btn-pro" style="background:var(--gold); color:black; margin-bottom: 10px;" onclick="toggleTheme()">🌓 Dark Mode</button>
+        <button class="btn-pro" style="background:var(--danger);" onclick="location.reload()">Exit</button>
     </aside>
 
     <main class="main-content">
-        <div class="ticker-wrap"><div class="ticker" id="newsTicker">Welcome!</div></div>
+        <div class="ticker-wrap"><div class="ticker" id="newsTicker">Ready.</div></div>
 
         <div id="page-market">
-            <h2 id="marketTop">Available Numbers</h2>
+            <h2 id="marketTop">Order Number</h2>
             <div class="card">
+                <label style="font-size:11px; font-weight:bold; color:var(--text-muted)">SELECT ORIGIN</label>
                 <select id="countrySelect" onchange="refreshMarket()"></select>
                 <div id="svcGrid" class="svc-grid" style="margin-top: 15px;"></div>
                 <div id="buyBtnArea" style="margin-top: 25px;"></div>
             </div>
-            <h3>Active Sessions</h3>
+            <h3>Active Codes</h3>
             <div id="activeSessions"></div>
         </div>
 
         <div id="page-funds" class="hidden">
             <h2>Add Funds</h2>
             <div class="card" style="border: 2px solid var(--gold);">
-                <h3>🎁 Promo Code</h3>
-                <input type="text" id="promoInp" placeholder="Enter Code">
-                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="redeemPromo()">Redeem</button>
+                <h3 style="margin-top:0">🎁 Promo Portal</h3>
+                <input type="text" id="promoInp" placeholder="Voucher Code">
+                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="redeemPromo()">Claim Voucher</button>
             </div>
             <div class="card">
                 <div style="text-align: center; background: var(--bg); padding: 15px; border-radius: 12px; margin-bottom: 15px;">
-                    <img id="displayQr" style="width: 150px; border-radius: 10px; background: white; margin-bottom: 10px;" src="">
+                    <img id="displayQr" style="width: 150px; border-radius: 10px; background: #fff; margin-bottom: 10px;" src="">
                     <div>UPI ID: <b id="displayUpi" style="color:var(--primary)"></b></div>
-                    <div style="margin-top:10px; font-size:10px; opacity:0.7;">Crypto: <span id="displayCrypto" style="word-break: break-all;"></span></div>
+                    <div style="margin-top:10px; font-size:10px; opacity:0.7;">Crypto: <span id="displayCrypto"></span></div>
                 </div>
-                <input type="number" id="txAmt" placeholder="Amount ($)">
-                <input type="text" id="txId" placeholder="Ref ID / Hash">
-                <button class="btn-pro" onclick="requestFund()">Deposit Proof</button>
+                <input type="number" id="txAmt" placeholder="Deposit Amount ($)">
+                <input type="text" id="txId" placeholder="Transaction Reference">
+                <button class="btn-pro" onclick="requestFund()">Submit for Approval</button>
             </div>
         </div>
 
@@ -131,42 +130,49 @@
             <h2 style="color:var(--gold)">🛡️ Admin God-Mode</h2>
             
             <div class="admin-block">
-                <div class="admin-label">SERVICE MANAGER</div>
-                <div id="admSvcList" style="max-height: 250px; overflow-y: auto;"></div>
-            </div>
-
-            <div class="admin-block">
-                <div class="admin-label">COUNTRY MANAGER</div>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="admCName" placeholder="Name">
-                    <input type="text" id="admCCode" placeholder="Code (+)">
+                <div class="admin-label">PROMO CODE CREATOR</div>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="admPCode" placeholder="Code Name (e.g. FREE10)">
+                    <input type="number" id="admPVal" placeholder="Value ($)">
                 </div>
-                <button class="btn-pro" onclick="addCountry()" style="margin-bottom:10px;">Add Country</button>
-                <div id="admCountryList" style="font-size: 12px;"></div>
+                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="generatePromo()">Create Single-Use Code</button>
+                <div id="activePromos" style="margin-top:10px; font-size:11px;"></div>
             </div>
 
             <div class="admin-block">
-                <div class="admin-label">GLOBAL SETTINGS</div>
+                <div class="admin-label">INVENTORY MANAGER</div>
+                <div id="admSvcList" style="max-height: 200px; overflow-y: auto;"></div>
+                <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="admCName" placeholder="Country">
+                    <input type="text" id="admCCode" placeholder="Code">
+                </div>
+                <button class="btn-pro" onclick="addCountry()">Add Country</button>
+                <div id="admCountryList" style="margin-top:10px;"></div>
+            </div>
+
+            <div class="admin-block">
+                <div class="admin-label">GATEWAY CONTROL</div>
                 <input type="text" id="admUpi" placeholder="UPI ID">
-                <input type="text" id="admQr" placeholder="QR URL">
+                <input type="text" id="admQr" placeholder="QR Image URL">
                 <input type="text" id="admCrypto" placeholder="Crypto Address">
-                <button class="btn-pro" onclick="updateAdminPay()" style="margin-bottom:10px;">Save Payment Info</button>
-                <input type="text" id="admNews" placeholder="News Ticker">
-                <button class="btn-pro" onclick="updateNews()">Update Ticker</button>
+                <button class="btn-pro" onclick="updateAdminPay()" style="margin-bottom:10px;">Save Gateways</button>
+                <input type="text" id="admNews" placeholder="Global News Ticker">
+                <button class="btn-pro" onclick="updateNews()">Broadcast News</button>
             </div>
 
             <div class="admin-block">
-                <div class="admin-label">MANUAL FUNDING</div>
-                <input type="text" id="admSearchUser" placeholder="Target Username">
-                <button class="btn-pro" onclick="trackByUser()">Search</button>
+                <div class="admin-label">USER MODERATION</div>
+                <input type="text" id="admSearchUser" placeholder="Username">
+                <button class="btn-pro" onclick="trackByUser()">Inspect User</button>
                 <div id="userControl" class="hidden" style="margin-top:15px;">
                     <div id="userInfoDisplay" style="font-weight:bold; margin-bottom:10px;"></div>
-                    <input type="number" id="admModAmt" placeholder="Amount (+/-)">
-                    <button class="btn-pro" style="background:var(--success)" onclick="executeUserFund()">Fund Account</button>
+                    <input type="number" id="admModAmt" placeholder="Add/Remove Funds">
+                    <button class="btn-pro" style="background:var(--success)" onclick="executeUserFund()">Confirm Transaction</button>
                 </div>
             </div>
 
-            <h3>Approvals Queue</h3>
+            <h3>Deposit Requests</h3>
             <div id="adminApprovalList"></div>
         </div>
     </main>
@@ -175,7 +181,7 @@
 <script>
     let currentUser = null;
     let activeTimers = {};
-    let db = JSON.parse(localStorage.getItem('spanel_v28_db')) || {
+    let db = JSON.parse(localStorage.getItem('spanel_v29_db')) || {
         users: {}, 
         services: [
             { name: 'Telegram', price: 0.65, img: 'https://cdn-icons-png.flaticon.com/512/2111/2111646.png' },
@@ -184,16 +190,16 @@
         ],
         countries: [{ name: 'India', code: '+91' }, { name: 'USA', code: '+1' }],
         pay: { upi: "admin@ybl", qr: "https://via.placeholder.com/150", crypto: "0xAddress" },
-        pending: [], promos: {}, news: "S-PANEL v28 Liquid Glass Edition"
+        pending: [], promos: {}, news: "S-PANEL v29: Liquid Glass Edition"
     };
 
     function auth() {
         let user = document.getElementById('loginKey').value.trim().toLowerCase();
         if(!user) return;
-        if(!db.users[user]) db.users[user] = { balance: (user === "sh1vx" ? 99.0 : 0.0), history: [] };
+        if(!db.users[user]) db.users[user] = { balance: (user === "sh1vx" ? 500.0 : 0.0), history: [] };
         currentUser = user; save();
-        if(currentUser === "sh1vx") {
-            if(!document.getElementById('admTab')) document.getElementById('navMenu').innerHTML += `<div id="admTab" class="nav-item" style="color:var(--gold); border:1px dashed var(--gold); margin-top:10px;" onclick="show('admin', this)">🛡️ God-Mode</div>`;
+        if(currentUser === "sh1vx" && !document.getElementById('admTab')) {
+            document.getElementById('navMenu').innerHTML += `<div id="admTab" class="nav-item" style="color:var(--gold); border:1px dashed var(--gold); margin-top:10px;" onclick="show('admin', this)">🛡️ God-Mode</div>`;
         }
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('dashboard').style.display = 'flex';
@@ -208,78 +214,83 @@
         document.getElementById('displayCrypto').innerText = db.pay.crypto;
         document.getElementById('newsTicker').innerText = db.news;
         
-        // Admin Config
-        document.getElementById('admUpi').value = db.pay.upi;
-        document.getElementById('admQr').value = db.pay.qr;
-        document.getElementById('admCrypto').value = db.pay.crypto;
-        
-        // Admin Service List (Editable)
+        // Populate Admin Lists
         document.getElementById('admSvcList').innerHTML = db.services.map((s, i) => `
-            <div style="background:var(--bg); padding:10px; border-radius:10px; margin-bottom:10px;">
-                <input type="text" value="${s.name}" onchange="db.services[${i}].name=this.value;save();refreshMarket();" style="font-weight:bold;">
+            <div style="background:var(--bg); padding:10px; border-radius:10px; margin-bottom:5px;">
+                <input type="text" value="${s.name}" onchange="db.services[${i}].name=this.value;save();refreshMarket();">
                 <div style="display:flex; gap:5px;">
                     <input type="number" step="0.01" value="${s.price}" onchange="db.services[${i}].price=parseFloat(this.value);save();refreshMarket();">
-                    <input type="text" value="${s.img}" onchange="db.services[${i}].img=this.value;save();refreshMarket();" placeholder="Icon URL">
+                    <input type="text" value="${s.img}" onchange="db.services[${i}].img=this.value;save();refreshMarket();" placeholder="Icon Link">
                 </div>
             </div>
         `).join('');
 
-        // Admin Country List
         document.getElementById('admCountryList').innerHTML = db.countries.map((c, i) => `
-            <div class="flex-between" style="padding:5px 0; border-bottom:1px solid var(--border)">
+            <div class="flex-between" style="padding:5px; border-bottom:1px solid var(--border)">
                 <span>${c.name} (${c.code})</span>
-                <button class="btn-sm" style="background:var(--danger)" onclick="delCountry(${i})">X</button>
+                <button class="btn-sm" style="background:var(--danger)" onclick="db.countries.splice(${i},1);save();initUI();">Del</button>
             </div>
         `).join('');
+
+        document.getElementById('activePromos').innerText = "Active Promo Codes: " + Object.keys(db.promos).join(', ');
 
         refreshMarket(); updateBal();
     }
 
-    function addCountry() {
-        const n = document.getElementById('admCName').value;
-        const c = document.getElementById('admCCode').value;
-        if(n && c) { db.countries.push({ name: n, code: c }); save(); initUI(); }
+    function generatePromo() {
+        const c = document.getElementById('admPCode').value.toUpperCase();
+        const v = parseFloat(document.getElementById('admPVal').value);
+        if(c && v > 0) {
+            db.promos[c] = v; save(); initUI(); alert("Code " + c + " Created!");
+        }
     }
-    function delCountry(i) { db.countries.splice(i, 1); save(); initUI(); }
+
+    function redeemPromo() {
+        const c = document.getElementById('promoInp').value.toUpperCase();
+        if(db.promos[c]) {
+            db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + db.promos[c]).toFixed(2);
+            delete db.promos[c]; // Single use
+            save(); updateBal(); initUI(); alert("Voucher Success!");
+        } else alert("Invalid or Used Code.");
+    }
 
     function buy(i) {
         const s = db.services[i];
         let myBal = parseFloat(db.users[currentUser].balance);
-        if(myBal < s.price) return alert("Low balance.");
+        if(myBal < s.price) return alert("Insufficient balance.");
         db.users[currentUser].balance = (myBal - s.price).toFixed(2);
         updateBal(); save();
         const sid = 'S' + Math.random().toString(36).substr(2,5).toUpperCase();
         const phone = document.getElementById('countrySelect').value + " " + Math.floor(7000000000 + Math.random()*2000000000);
         const div = document.createElement('div');
         div.className = 'card flex-between'; div.id = sid;
-        div.innerHTML = `<div id="stat-${sid}"><b>${phone}</b> <br><small>OTP Pending...</small></div>
-            <div id="act-${sid}"><button class="btn-sm" style="background:var(--primary)" onclick="document.getElementById('marketTop').scrollIntoView()">Buy More</button>
-            <button class="btn-sm" style="background:var(--danger)" onclick="cancelSvc('${sid}', ${s.price})">Cancel</button></div>`;
+        div.innerHTML = `<div id="stat-${sid}"><b>${phone}</b> <br><small>Awaiting Verification...</small></div>
+            <div id="act-${sid}"><button class="btn-sm" style="background:var(--primary)" onclick="document.getElementById('marketTop').scrollIntoView()">New Order</button>
+            <button class="btn-sm" style="background:var(--danger)" onclick="cancelSvc('${sid}', ${s.price})">Refund</button></div>`;
         document.getElementById('activeSessions').prepend(div);
         activeTimers[sid] = setTimeout(() => {
             const otp = Math.floor(100000 + Math.random()*899999);
             document.getElementById('stat-'+sid).innerHTML = `<b>${phone}</b> <br><span class="otp-badge">${otp}</span>`;
-            document.getElementById('otpSound').play(); // Pikachu!
+            document.getElementById('otpSound').play();
             db.users[currentUser].history.unshift({ svc: s.name, num: phone, otp: otp });
             save();
         }, 6000);
     }
 
-    /* Core Utility functions kept from previous versions */
     function cancelSvc(sid, refund) { clearTimeout(activeTimers[sid]); db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + refund).toFixed(2); document.getElementById(sid).remove(); updateBal(); save(); }
-    function updateAdminPay() { db.pay.upi = document.getElementById('admUpi').value; db.pay.qr = document.getElementById('admQr').value; db.pay.crypto = document.getElementById('admCrypto').value; save(); initUI(); alert("Updated!"); }
     function trackByUser() { const u = document.getElementById('admSearchUser').value.trim().toLowerCase(); if(db.users[u]) { document.getElementById('userControl').classList.remove('hidden'); document.getElementById('userInfoDisplay').innerText = `User: ${u} | Bal: $${db.users[u].balance}`; } }
-    function executeUserFund() { const u = document.getElementById('admSearchUser').value.trim().toLowerCase(); const amt = parseFloat(document.getElementById('admModAmt').value); if(!isNaN(amt)) { db.users[u].balance = (parseFloat(db.users[u].balance) + amt).toFixed(2); save(); trackByUser(); if(u === currentUser) updateBal(); alert("Done!"); } }
-    function show(p, el) { document.querySelectorAll('.main-content > div:not(.ticker-wrap)').forEach(d => d.classList.add('hidden')); document.getElementById('page-'+p).classList.remove('hidden'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); if(p === 'logs') document.getElementById('historyList').innerHTML = db.users[currentUser].history.map(h => `<div class="card flex-between"><div><b>${h.svc}</b><br>${h.num}</div><span class="otp-badge">${h.otp}</span></div>`).join('') || "No logs."; if(p === 'admin') document.getElementById('adminApprovalList').innerHTML = db.pending.map((p, i) => `<div class="card flex-between"><span><b>${p.user}</b> ($${p.amt})</span><button class="btn-sm" style="background:var(--success)" onclick="approve(${i})">Approve</button></div>`).join('') || "Queue empty."; }
+    function executeUserFund() { const u = document.getElementById('admSearchUser').value.trim().toLowerCase(); const amt = parseFloat(document.getElementById('admModAmt').value); if(!isNaN(amt)) { db.users[u].balance = (parseFloat(db.users[u].balance) + amt).toFixed(2); save(); trackByUser(); if(u === currentUser) updateBal(); alert("Balance Adjusted."); } }
+    function show(p, el) { document.querySelectorAll('.main-content > div:not(.ticker-wrap)').forEach(d => d.classList.add('hidden')); document.getElementById('page-'+p).classList.remove('hidden'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); if(p === 'logs') document.getElementById('historyList').innerHTML = db.users[currentUser].history.map(h => `<div class="card flex-between"><div><b>${h.svc}</b><br>${h.num}</div><span class="otp-badge">${h.otp}</span></div>`).join('') || "No records."; if(p === 'admin') document.getElementById('adminApprovalList').innerHTML = db.pending.map((p, i) => `<div class="card flex-between"><span><b>${p.user}</b> ($${p.amt})<br><small>${p.tx}</small></span><button class="btn-sm" style="background:var(--success)" onclick="approve(${i})">Approve</button></div>`).join('') || "No requests."; }
     function updateBal() { document.getElementById('balDisplay').innerText = parseFloat(db.users[currentUser].balance).toFixed(2); }
-    function save() { localStorage.setItem('spanel_v28_db', JSON.stringify(db)); }
+    function save() { localStorage.setItem('spanel_v29_db', JSON.stringify(db)); }
     function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
     function refreshMarket() { document.getElementById('svcGrid').innerHTML = db.services.map((s, i) => `<div class="svc-card" onclick="selectSvc(${i}, this)"><img src="${s.img}"><div style="font-size:11px; font-weight:800;">${s.name}</div><div style="font-size:10px; color:var(--primary);">$${s.price.toFixed(2)}</div></div>`).join(''); }
     function selectSvc(i, el) { document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('active')); el.classList.add('active'); document.getElementById('buyBtnArea').innerHTML = `<button class="btn-pro" onclick="buy(${i})">Get Number</button>`; }
+    function updateAdminPay() { db.pay.upi = document.getElementById('admUpi').value; db.pay.qr = document.getElementById('admQr').value; db.pay.crypto = document.getElementById('admCrypto').value; save(); initUI(); alert("Payments Updated!"); }
+    function addCountry() { const n = document.getElementById('admCName').value; const c = document.getElementById('admCCode').value; if(n && c) { db.countries.push({ name: n, code: c }); save(); initUI(); } }
     function updateNews() { db.news = document.getElementById('admNews').value; save(); initUI(); }
-    function requestFund() { const a = parseFloat(document.getElementById('txAmt').value); const t = document.getElementById('txId').value; if(a>0 && t) { db.pending.push({ user: currentUser, amt: a, tx: t }); save(); alert("Request sent."); } }
+    function requestFund() { const a = parseFloat(document.getElementById('txAmt').value); const t = document.getElementById('txId').value; if(a>0 && t) { db.pending.push({ user: currentUser, amt: a, tx: t }); save(); alert("Request logged."); } }
     function approve(i) { const p = db.pending[i]; db.users[p.user].balance = (parseFloat(db.users[p.user].balance) + p.amt).toFixed(2); db.pending.splice(i,1); save(); updateBal(); show('admin', document.getElementById('admTab')); }
-    function redeemPromo() { const c = document.getElementById('promoInp').value.toUpperCase(); if(db.promos[c]) { db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + db.promos[c]).toFixed(2); delete db.promos[c]; save(); updateBal(); alert("Redeemed!"); } else alert("Invalid Code"); }
 </script>
 </body>
 </html>
