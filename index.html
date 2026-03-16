@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S-PANEL | Omega v32</title>
+    <title>S-PANEL | Master v34</title>
     <style>
         :root { 
             --primary: #377dff; --bg: #f0f2f5; --card-bg: #ffffff; 
@@ -14,50 +14,45 @@
             --bg: #090b10; --card-bg: #161c26; --text-main: #f8fafc;
             --text-muted: #95aac9; --border: #2d3748;
         }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; transition: 0.3s; }
 
-        /* LIQUID GLASS LOGIN PAGE */
+        /* LIQUID GLASS LOGIN */
         #loginOverlay { 
             position: fixed; inset: 0; z-index: 9999; 
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364), url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             display: flex; justify-content: center; align-items: center; 
         }
         .glass-card { 
-            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.15); padding: 50px; border-radius: 40px; width: 360px; text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2); padding: 50px; border-radius: 40px; width: 360px; text-align: center;
         }
-        .glass-card h2 { color: white; margin-bottom: 30px; font-weight: 900; letter-spacing: 3px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .glass-card input { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: white; margin-bottom: 15px; border-radius: 12px; }
-        .glass-card input::placeholder { color: rgba(255,255,255,0.4); }
+        .glass-card input { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; margin-bottom: 15px; }
 
         #dashboard { display: none; height: 100vh; }
         .sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
         .main-content { flex: 1; padding: 0 30px 30px 30px; overflow-y: auto; }
-        .ticker-wrap { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 12px 0; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; overflow: hidden; }
-        .ticker { display: inline-block; animation: marquee 30s linear infinite; font-weight: 700; color: var(--primary); font-size: 13px; white-space: nowrap; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
         .card { background: var(--card-bg); border-radius: 18px; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; position: relative; }
-        .nav-item { padding: 12px; cursor: pointer; border-radius: 10px; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; transition: 0.2s; }
+        .nav-item { padding: 12px; cursor: pointer; border-radius: 10px; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; }
         .nav-item.active { background: var(--primary); color: white; }
+        
         input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); box-sizing: border-box; outline: none; }
-        .btn-pro { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 700; }
+        .btn-pro { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 700; transition: 0.2s; }
+        .btn-pro:active { transform: scale(0.98); }
         .btn-sm { padding: 8px 14px; font-size: 10px; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; color: white; }
         
         .svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
-        .svc-card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px 10px; border-radius: 15px; text-align: center; cursor: pointer; }
-        .svc-card img { width: 40px; height: 40px; margin-bottom: 8px; border-radius: 10px; }
-        .svc-card.active { border-color: var(--primary); background: rgba(55,125,255,0.05); border-width: 2px; }
+        .svc-card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px 10px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .svc-card img { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 8px; }
+        .svc-card.active { border-color: var(--primary); background: rgba(55,125,255,0.1); border-width: 2px; }
         
-        /* PAYMENT SELECTOR */
         .pay-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
         .pay-tab { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; font-size: 11px; font-weight: 700; background: var(--bg); }
-        .pay-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .pay-tab.active { background: var(--primary); color: white; }
 
         .otp-badge { background: var(--success); color: white; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-family: monospace; }
         .hidden { display: none !important; }
-        .admin-block { border: 1px solid var(--gold); padding: 20px; border-radius: 18px; margin-bottom: 25px; position: relative; background: rgba(241, 196, 15, 0.02); }
+        .admin-block { border: 1px solid var(--gold); padding: 20px; border-radius: 18px; margin-bottom: 25px; position: relative; background: rgba(241, 196, 15, 0.05); }
         .admin-label { position: absolute; top: -12px; left: 15px; background: var(--gold); color: black; font-size: 10px; padding: 3px 12px; border-radius: 6px; font-weight: 900; }
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
     </style>
@@ -66,137 +61,119 @@
 
 <div id="loginOverlay">
     <div class="glass-card">
-        <h2>S-PANEL Ω</h2>
+        <h2 style="color:white; letter-spacing: 2px;">S-PANEL MASTER</h2>
         <input type="text" id="loginKey" placeholder="Username">
         <input type="password" id="loginPass" placeholder="Password">
-        <input type="text" id="refCodeInp" placeholder="Referral Code (Optional)">
-        <button class="btn-pro" style="background: white; color: #0f2027; margin-top: 10px;" onclick="auth()">UNSEAL DASHBOARD</button>
+        <input type="text" id="refCodeInp" placeholder="Invite Code (Optional)">
+        <button class="btn-pro" style="background: white; color: #1a2a6c; margin-top:10px;" onclick="auth()">ACCESS SYSTEM</button>
     </div>
 </div>
 
 <div id="dashboard">
     <aside class="sidebar">
-        <div style="font-weight: 900; color: var(--primary); font-size: 24px; margin-bottom: 25px;">⚡ S-PANEL</div>
-        <div style="background: var(--primary); color: white; padding: 22px; border-radius: 20px; margin-bottom: 30px;">
-            <div style="font-size: 10px; opacity: 0.8; font-weight: 800;">TOTAL ASSETS</div>
+        <div class="flex-between" style="margin-bottom:25px;">
+            <div style="font-weight: 900; color: var(--primary); font-size: 22px;">⚡ S-PANEL</div>
+            <button onclick="toggleTheme()" style="background:none; border:none; cursor:pointer; font-size:20px;">🌓</button>
+        </div>
+        <div style="background: var(--primary); color: white; padding: 20px; border-radius: 20px; margin-bottom: 25px;">
+            <div style="font-size: 10px; font-weight: 800; opacity: 0.8;">WALLET BALANCE</div>
             <div style="font-size: 32px; font-weight: 900;">$<span id="balDisplay">0.00</span></div>
-            <div id="userDisplay" style="font-size: 11px; font-weight: 600; margin-top:5px; opacity:0.9;">---</div>
+            <div id="userDisplay" style="font-size: 11px; margin-top:5px; opacity:0.9;">---</div>
         </div>
         <nav id="navMenu" style="flex-grow: 1;">
-            <div class="nav-item active" onclick="show('market', this)">🌍 Marketplace</div>
+            <div class="nav-item active" onclick="show('market', this)">🌍 Services</div>
             <div class="nav-item" onclick="show('funds', this)">💳 Wallet</div>
-            <div class="nav-item" onclick="show('referral', this)">👥 My Network</div>
-            <div class="nav-item" onclick="show('logs', this)">📜 Order Logs</div>
+            <div class="nav-item" onclick="show('referral', this)">👥 Referrals</div>
+            <div class="nav-item" onclick="show('logs', this)">📜 Logs</div>
         </nav>
-        <button class="btn-pro" style="background:var(--danger);" onclick="location.reload()">Terminate Session</button>
+        <button class="btn-pro" style="background:var(--danger);" onclick="location.reload()">Exit Session</button>
     </aside>
 
     <main class="main-content">
-        <div class="ticker-wrap"><div class="ticker" id="newsTicker">Syncing with server...</div></div>
-
         <div id="page-market">
-            <h2>Acquire Number</h2>
+            <h2>Select Service</h2>
             <div class="card">
                 <select id="countrySelect" onchange="refreshMarket()"></select>
                 <div id="svcGrid" class="svc-grid" style="margin-top: 15px;"></div>
-                <div id="buyBtnArea" style="margin-top: 25px;"></div>
+                <div id="buyBtnArea" style="margin-top: 20px;"></div>
             </div>
             <h3>Active Lines</h3>
             <div id="activeSessions"></div>
         </div>
 
         <div id="page-funds" class="hidden">
-            <h2>Add Funds</h2>
-            <div class="card" style="border: 2px solid var(--gold);">
-                <h3 style="margin-top:0">🎁 Voucher Portal</h3>
-                <input type="text" id="promoInp" placeholder="Enter Promo Code">
-                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="redeemPromo()">Apply Code</button>
-            </div>
+            <h2>Deposit Funds</h2>
             <div class="card">
                 <div class="pay-tabs">
                     <div class="pay-tab active" onclick="switchPay('upi', this)">UPI</div>
                     <div class="pay-tab" onclick="switchPay('crypto', this)">Crypto</div>
-                    <div class="pay-tab" onclick="switchPay('card', this)">Credit Card</div>
+                    <div class="pay-tab" onclick="switchPay('card', this)">Card</div>
                 </div>
                 <div id="payContent" style="text-align: center; background: var(--bg); padding: 20px; border-radius: 12px; margin-bottom: 15px;">
                     <div id="payUpi">
-                        <img id="displayQr" style="width: 150px; background: #fff; border-radius: 10px; margin-bottom: 10px;" src="">
+                        <img id="displayQr" style="width: 140px; background: #fff; border-radius: 10px; margin-bottom: 10px;" src="">
                         <div>UPI ID: <b id="displayUpi" style="color:var(--primary)"></b></div>
                     </div>
                     <div id="payCrypto" class="hidden">
-                        <div style="font-size:11px;">SEND USDT/BTC TO:</div>
+                        <div style="font-size:11px;">SEND USDT TO:</div>
                         <b id="displayCrypto" style="word-break: break-all; color:var(--primary)"></b>
                     </div>
-                    <div id="payCard" class="hidden">
-                        <p style="font-size:13px;">Card gateway is available via manual agent. Enter amount and Ref ID "CARD-REQ" below.</p>
-                    </div>
+                    <div id="payCard" class="hidden">Card Gateway is Offline. Contact Support for manual link.</div>
                 </div>
-                <input type="number" id="txAmt" placeholder="Amount in USD">
-                <input type="text" id="txId" placeholder="Transaction Ref / Hash">
-                <button class="btn-pro" onclick="requestFund()">Request Approval</button>
+                <input type="number" id="txAmt" placeholder="Deposit Amount ($)">
+                <input type="text" id="txId" placeholder="Transaction Reference / ID">
+                <button class="btn-pro" onclick="requestFund()">Request Deposit</button>
+            </div>
+            <div class="card" style="border: 2px solid var(--gold);">
+                <h3>🎁 Promo Voucher</h3>
+                <input type="text" id="promoInp" placeholder="Enter Code">
+                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="redeemPromo()">Redeem Code</button>
             </div>
         </div>
 
         <div id="page-referral" class="hidden">
-            <h2>Network Earnings</h2>
+            <h2>Refer & Earn</h2>
             <div class="card">
-                <h3>Your Referral Code</h3>
-                <div style="background:var(--bg); padding:15px; border-radius:10px; font-weight:bold; color:var(--primary); text-align:center; font-size:1.2rem;" id="refLinkDisplay">---</div>
-                <p style="font-size:12px; color:var(--text-muted); margin-top:15px;">Invite users to earn 5% of their total deposit value instantly.</p>
+                <small>YOUR INVITE CODE</small>
+                <div id="refLinkDisplay" style="font-size: 24px; font-weight: 900; color: var(--primary); text-align: center; margin: 10px 0;">---</div>
+                <p style="font-size:12px; color:var(--text-muted); text-align:center;">Earn 5% commission on all referral deposits instantly.</p>
             </div>
-            <div class="card">
-                <div class="flex-between"><span>Active Referrals:</span> <b id="refCount">0</b></div>
-                <div class="flex-between" style="margin-top:10px;"><span>Total Commissions:</span> <b id="refEarned">$0.00</b></div>
+            <div class="card flex-between">
+                <div>Total Referrals: <b id="refCount">0</b></div>
+                <div>Commission Earned: <b id="refEarned">$0.00</b></div>
             </div>
         </div>
 
-        <div id="page-logs" class="hidden">
-            <h2>History</h2>
-            <div id="historyList"></div>
-        </div>
+        <div id="page-logs" class="hidden"><h2>Order History</h2><div id="historyList"></div></div>
 
         <div id="page-admin" class="hidden">
-            <h2 style="color:var(--gold)">🛡️ Admin God-Mode</h2>
+            <h2 style="color:var(--gold)">🛡️ Admin Authority</h2>
             
             <div class="admin-block">
-                <div class="admin-label">SERVICE MASTER</div>
+                <div class="admin-label">LIVE SERVICE MANAGER</div>
                 <div id="admSvcList"></div>
                 <div style="background:var(--bg); padding:15px; border-radius:15px; margin-top:10px;">
-                    <input type="text" id="admNewSvcName" placeholder="Service Name">
-                    <input type="number" id="admNewSvcPrice" placeholder="Price ($)">
+                    <input type="text" id="admNewSvcName" placeholder="New Name">
+                    <input type="number" id="admNewSvcPrice" placeholder="New Price">
                     <input type="text" id="admNewSvcImg" placeholder="Icon URL">
-                    <button class="btn-pro" onclick="addNewService()">Add to Inventory</button>
+                    <button class="btn-pro" onclick="addNewService()">Add to System</button>
                 </div>
             </div>
 
             <div class="admin-block">
-                <div class="admin-label">LOCALIZATION & GIFTS</div>
-                <div style="display:flex; gap:10px;"><input type="text" id="admPCode" placeholder="Promo"><input type="number" id="admPVal" placeholder="$"></div>
-                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="generatePromo()">Create Voucher</button>
-                <hr style="margin:15px 0; border:0; border-top:1px solid var(--border)">
-                <div id="admCountryList"></div>
-                <div style="display:flex; gap:10px; margin-top:10px;"><input type="text" id="admCName" placeholder="Country"><input type="text" id="admCCode" placeholder="+"></div>
-                <button class="btn-pro" onclick="addCountry()">Add Country</button>
-            </div>
-
-            <div class="admin-block">
-                <div class="admin-label">GATEWAY CONTROL</div>
-                <input type="text" id="admUpi" placeholder="UPI ID"><input type="text" id="admQr" placeholder="QR Link"><input type="text" id="admCrypto" placeholder="Crypto Addr">
+                <div class="admin-label">GATEWAYS & MODERATION</div>
+                <input type="text" id="admUpi" placeholder="UPI ID"><input type="text" id="admQr" placeholder="QR Image URL"><input type="text" id="admCrypto" placeholder="Crypto Address">
                 <button class="btn-pro" onclick="updateAdminPay()">Update Payments</button>
-                <input type="text" id="admNews" placeholder="Global Broadcast Message" style="margin-top:10px;">
-                <button class="btn-pro" onclick="updateNews()">Update Ticker</button>
-            </div>
-
-            <div class="admin-block">
-                <div class="admin-label">USER MODERATION</div>
-                <input type="text" id="admSearchUser" placeholder="Search Username"><button class="btn-pro" onclick="trackByUser()">Inspect</button>
+                <hr style="margin:20px 0; border-color:var(--border)">
+                <input type="text" id="admSearchUser" placeholder="Search User"><button class="btn-pro" onclick="trackByUser()">Inspect User</button>
                 <div id="userControl" class="hidden" style="margin-top:15px;">
-                    <div id="userInfoDisplay" style="font-weight:bold; margin-bottom:10px;"></div>
-                    <input type="number" id="admModAmt" placeholder="+/- Dollars"><button class="btn-pro" style="background:var(--success)" onclick="executeUserFund()">Adjust Balance</button>
+                    <div id="userInfoDisplay" style="font-weight:900;"></div>
+                    <input type="number" id="admModAmt" placeholder="+/- Amount">
+                    <button class="btn-pro" style="background:var(--success)" onclick="executeUserFund()">Adjust Balance</button>
                 </div>
             </div>
 
-            <h3>Pending Approvals</h3>
+            <h3>Approval Queue</h3>
             <div id="adminApprovalList"></div>
         </div>
     </main>
@@ -207,12 +184,12 @@
     let activeTimers = {};
     let pikachu = new Audio('https://www.myinstants.com/media/sounds/pikachu-sound-28900.mp3');
 
-    let db = JSON.parse(localStorage.getItem('spanel_v32_db')) || {
+    let db = JSON.parse(localStorage.getItem('spanel_v34_db')) || {
         users: {}, 
         services: [{ name: 'Telegram', price: 0.60, img: 'https://cdn-icons-png.flaticon.com/512/2111/2111646.png' }],
         countries: [{ name: 'India', code: '+91' }],
         pay: { upi: "admin@ybl", qr: "https://via.placeholder.com/150", crypto: "0xAddress" },
-        pending: [], promos: {}, news: "S-PANEL v32.0 OMEGA EDITION IS NOW LIVE"
+        pending: [], promos: {}
     };
 
     function auth() {
@@ -224,16 +201,13 @@
             if(db.users[user].inviter) db.users[db.users[user].inviter].refs++;
         }
         currentUser = user; save();
-        
-        // Browser Audio Unlock
-        pikachu.play().then(() => { pikachu.pause(); pikachu.currentTime = 0; }).catch(() => {});
-
+        pikachu.play().then(() => { pikachu.pause(); }).catch(() => {});
         if(currentUser === "sh1vx") {
-            if(!document.getElementById('admTab')) document.getElementById('navMenu').innerHTML += `<div id="admTab" class="nav-item" style="color:var(--gold); border:1px dashed var(--gold); margin-top:10px;" onclick="show('admin', this)">🛡️ God-Mode</div>`;
+            if(!document.getElementById('admTab')) document.getElementById('navMenu').innerHTML += `<div id="admTab" class="nav-item" style="color:var(--gold); border:1px solid var(--gold); margin-top:10px;" onclick="show('admin', this)">🛡️ Admin</div>`;
         }
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('dashboard').style.display = 'flex';
-        document.getElementById('userDisplay').innerText = "Logged in as: " + currentUser;
+        document.getElementById('userDisplay').innerText = "Session ID: " + currentUser;
         initUI();
     }
 
@@ -242,24 +216,19 @@
         document.getElementById('displayUpi').innerText = db.pay.upi;
         document.getElementById('displayQr').src = db.pay.qr;
         document.getElementById('displayCrypto').innerText = db.pay.crypto;
-        document.getElementById('newsTicker').innerText = db.news;
         document.getElementById('refLinkDisplay').innerText = currentUser.toUpperCase();
         document.getElementById('refCount').innerText = db.users[currentUser].refs || 0;
         document.getElementById('refEarned').innerText = "$" + (db.users[currentUser].refEarned || 0).toFixed(2);
         
-        // Admin Svc List
+        // ADMIN SERVICE EDITOR (Live Update Logic)
         document.getElementById('admSvcList').innerHTML = db.services.map((s, i) => `
-            <div class="flex-between" style="background:var(--bg); padding:10px; border-radius:10px; margin-bottom:5px;">
-                <span><b>${s.name}</b> ($${s.price.toFixed(2)})</span>
-                <button class="btn-sm" style="background:var(--danger)" onclick="db.services.splice(${i},1);save();initUI();">Remove</button>
-            </div>
-        `).join('');
-
-        // Admin Country List
-        document.getElementById('admCountryList').innerHTML = db.countries.map((c, i) => `
-            <div class="flex-between" style="padding:5px 0; border-bottom:1px solid var(--border)">
-                <span>${c.name} (${c.code})</span>
-                <button class="btn-sm" style="background:var(--danger)" onclick="db.countries.splice(${i},1);save();initUI();">Del</button>
+            <div class="card" style="padding:15px; margin-bottom:10px;">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" value="${s.name}" onchange="db.services[${i}].name=this.value;save();refreshMarket();">
+                    <input type="number" step="0.01" value="${s.price}" onchange="db.services[${i}].price=parseFloat(this.value);save();refreshMarket();">
+                    <button class="btn-sm" style="background:var(--danger)" onclick="db.services.splice(${i},1);save();initUI();">Del</button>
+                </div>
+                <input type="text" value="${s.img}" style="margin-top:5px; font-size:10px;" onchange="db.services[${i}].img=this.value;save();refreshMarket();">
             </div>
         `).join('');
 
@@ -268,28 +237,26 @@
 
     function buy(i) {
         const s = db.services[i];
-        if(parseFloat(db.users[currentUser].balance) < s.price) return alert("Insufficient Balance.");
+        if(parseFloat(db.users[currentUser].balance) < s.price) return alert("Low Funds.");
         db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) - s.price).toFixed(2);
         updateBal(); save();
-        const sid = 'S' + Math.random().toString(36).substr(2,5).toUpperCase();
-        const phone = document.getElementById('countrySelect').value + " " + Math.floor(7000000000 + Math.random()*2000000000);
-        const div = document.createElement('div');
-        div.className = 'card flex-between'; div.id = sid;
-        div.innerHTML = `<div id="stat-${sid}"><b>${phone}</b> <br><small>Awaiting OTP...</small></div>
-            <div id="act-${sid}"><button class="btn-sm" style="background:var(--danger)" onclick="cancelSvc('${sid}', ${s.price})">Cancel & Refund</button></div>`;
+        const sid = 'S' + Math.random().toString(36).substr(2,4).toUpperCase();
+        const phone = document.getElementById('countrySelect').value + " " + Math.floor(7000000000 + Math.random()*2999999999);
+        const div = document.createElement('div'); div.className = 'card flex-between'; div.id = sid;
+        div.innerHTML = `<div id="stat-${sid}"><b>${phone}</b> <br><small>Ready to receive...</small></div>
+            <button class="btn-sm" style="background:var(--danger)" onclick="cancelSvc('${sid}', ${s.price})">Refund</button>`;
         document.getElementById('activeSessions').prepend(div);
         activeTimers[sid] = setTimeout(() => {
             const otp = Math.floor(100000 + Math.random()*899999);
             document.getElementById('stat-'+sid).innerHTML = `<b>${phone}</b> <br><span class="otp-badge">${otp}</span>`;
-            pikachu.play().catch(e => console.log("Audio play blocked."));
+            pikachu.play().catch(()=>{});
             db.users[currentUser].history.unshift({ svc: s.name, num: phone, otp: otp }); save();
-        }, 6000);
+        }, 5000);
     }
 
     function approve(i) {
         const p = db.pending[i];
         db.users[p.user].balance = (parseFloat(db.users[p.user].balance) + p.amt).toFixed(2);
-        // Referral Commission Logic
         if(db.users[p.user].inviter) {
             let comm = p.amt * 0.05;
             db.users[db.users[p.user].inviter].balance = (parseFloat(db.users[db.users[p.user].inviter].balance) + comm).toFixed(2);
@@ -298,23 +265,21 @@
         db.pending.splice(i,1); save(); updateBal(); show('admin', document.getElementById('admTab'));
     }
 
-    /* Core Utility functions */
+    /* Core Handlers */
+    function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
     function switchPay(m, el) { document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active')); el.classList.add('active'); document.getElementById('payUpi').classList.toggle('hidden', m !== 'upi'); document.getElementById('payCrypto').classList.toggle('hidden', m !== 'crypto'); document.getElementById('payCard').classList.toggle('hidden', m !== 'card'); }
-    function addNewService() { const n = document.getElementById('admNewSvcName').value; const p = parseFloat(document.getElementById('admNewSvcPrice').value); const img = document.getElementById('admNewSvcImg').value || 'https://cdn-icons-png.flaticon.com/512/706/706814.png'; if(n && p) { db.services.push({ name: n, price: p, img: img }); save(); initUI(); alert("Added!"); } }
+    function addNewService() { const n = document.getElementById('admNewSvcName').value; const p = parseFloat(document.getElementById('admNewSvcPrice').value); if(n && p) { db.services.push({ name: n, price: p, img: document.getElementById('admNewSvcImg').value || 'https://cdn-icons-png.flaticon.com/512/706/706814.png' }); save(); initUI(); } }
     function cancelSvc(sid, refund) { clearTimeout(activeTimers[sid]); db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + refund).toFixed(2); document.getElementById(sid).remove(); updateBal(); save(); }
-    function show(p, el) { document.querySelectorAll('.main-content > div:not(.ticker-wrap)').forEach(d => d.classList.add('hidden')); document.getElementById('page-'+p).classList.remove('hidden'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); if(p === 'logs') document.getElementById('historyList').innerHTML = db.users[currentUser].history.map(h => `<div class="card flex-between"><div><b>${h.svc}</b><br>${h.num}</div><span class="otp-badge">${h.otp}</span></div>`).join('') || "No transactions."; if(p === 'admin') document.getElementById('adminApprovalList').innerHTML = db.pending.map((p, i) => `<div class="card flex-between"><span><b>${p.user}</b> ($${p.amt})</span><button class="btn-sm" style="background:var(--success)" onclick="approve(${i})">Approve</button></div>`).join('') || "Queue clear."; }
+    function show(p, el) { document.querySelectorAll('.main-content > div').forEach(d => d.classList.add('hidden')); document.getElementById('page-'+p).classList.remove('hidden'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); el.classList.add('active'); if(p === 'logs') document.getElementById('historyList').innerHTML = db.users[currentUser].history.map(h => `<div class="card flex-between"><span>${h.svc}<br>${h.num}</span><b class="otp-badge">${h.otp}</b></div>`).join('') || "No records."; if(p === 'admin') document.getElementById('adminApprovalList').innerHTML = db.pending.map((p, i) => `<div class="card flex-between"><span>${p.user} ($${p.amt})</span><button class="btn-sm" style="background:var(--success)" onclick="approve(${i})">Approve</button></div>`).join('') || "No requests."; }
     function updateBal() { document.getElementById('balDisplay').innerText = parseFloat(db.users[currentUser].balance).toFixed(2); }
-    function save() { localStorage.setItem('spanel_v32_db', JSON.stringify(db)); }
-    function refreshMarket() { document.getElementById('svcGrid').innerHTML = db.services.map((s, i) => `<div class="svc-card" onclick="selectSvc(${i}, this)"><img src="${s.img}"><div>${s.name}</div><div style="color:var(--primary); font-size:11px;">$${s.price.toFixed(2)}</div></div>`).join(''); }
-    function selectSvc(i, el) { document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('active')); el.classList.add('active'); document.getElementById('buyBtnArea').innerHTML = `<button class="btn-pro" onclick="buy(${i})">Get Number Now</button>`; }
-    function updateAdminPay() { db.pay.upi = document.getElementById('admUpi').value; db.pay.qr = document.getElementById('admQr').value; db.pay.crypto = document.getElementById('admCrypto').value; save(); initUI(); alert("Gateways Updated!"); }
-    function addCountry() { const n = document.getElementById('admCName').value; const c = document.getElementById('admCCode').value; if(n && c) { db.countries.push({ name: n, code: c }); save(); initUI(); } }
-    function updateNews() { db.news = document.getElementById('admNews').value; save(); initUI(); }
-    function requestFund() { const a = parseFloat(document.getElementById('txAmt').value); const t = document.getElementById('txId').value; if(a>0 && t) { db.pending.push({ user: currentUser, amt: a, tx: t }); save(); alert("Request submitted to sh1vx."); } }
-    function generatePromo() { const c = document.getElementById('admPCode').value.toUpperCase(); db.promos[c] = parseFloat(document.getElementById('admPVal').value); save(); alert("Voucher " + c + " Created."); }
-    function redeemPromo() { const c = document.getElementById('promoInp').value.toUpperCase(); if(db.promos[c]) { db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + db.promos[c]).toFixed(2); delete db.promos[c]; save(); updateBal(); alert("Voucher applied successfully!"); } else alert("Invalid Code."); }
-    function trackByUser() { const u = document.getElementById('admSearchUser').value.toLowerCase(); if(db.users[u]) { document.getElementById('userControl').classList.remove('hidden'); document.getElementById('userInfoDisplay').innerHTML = `User: ${u} | Current Bal: $${db.users[u].balance}`; } }
-    function executeUserFund() { const u = document.getElementById('admSearchUser').value.toLowerCase(); const amt = parseFloat(document.getElementById('admModAmt').value); if(!isNaN(amt)) { db.users[u].balance = (parseFloat(db.users[u].balance) + amt).toFixed(2); save(); trackByUser(); if(u === currentUser) updateBal(); alert("Balance updated."); } }
+    function save() { localStorage.setItem('spanel_v34_db', JSON.stringify(db)); }
+    function refreshMarket() { document.getElementById('svcGrid').innerHTML = db.services.map((s, i) => `<div class="svc-card" onclick="selectSvc(${i}, this)"><img src="${s.img}"><div>${s.name}</div><small>$${s.price.toFixed(2)}</small></div>`).join(''); }
+    function selectSvc(i, el) { document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('active')); el.classList.add('active'); document.getElementById('buyBtnArea').innerHTML = `<button class="btn-pro" onclick="buy(${i})">Purchase Now</button>`; }
+    function updateAdminPay() { db.pay.upi = document.getElementById('admUpi').value; db.pay.qr = document.getElementById('admQr').value; db.pay.crypto = document.getElementById('admCrypto').value; save(); initUI(); alert("Gateways Saved."); }
+    function requestFund() { const a = parseFloat(document.getElementById('txAmt').value); const t = document.getElementById('txId').value; if(a>0 && t) { db.pending.push({ user: currentUser, amt: a, tx: t }); save(); alert("Request logged."); } }
+    function redeemPromo() { const c = document.getElementById('promoInp').value.toUpperCase(); if(db.promos[c]) { db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + db.promos[c]).toFixed(2); delete db.promos[c]; save(); updateBal(); alert("Promo Applied!"); } }
+    function trackByUser() { const u = document.getElementById('admSearchUser').value.toLowerCase(); if(db.users[u]) { document.getElementById('userControl').classList.remove('hidden'); document.getElementById('userInfoDisplay').innerText = u.toUpperCase() + " | Bal: $" + db.users[u].balance; } }
+    function executeUserFund() { const u = document.getElementById('admSearchUser').value.toLowerCase(); const amt = parseFloat(document.getElementById('admModAmt').value); if(!isNaN(amt)) { db.users[u].balance = (parseFloat(db.users[u].balance) + amt).toFixed(2); save(); trackByUser(); updateBal(); } }
 </script>
 </body>
 </html>
