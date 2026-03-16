@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S-PANEL | Ultimate v22</title>
+    <title>S-PANEL | Pro Master v24</title>
     <style>
         :root { 
             --primary: #377dff; --bg: #f0f2f5; --card-bg: #ffffff; 
@@ -16,40 +16,33 @@
         }
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text-main); height: 100vh; overflow: hidden; }
         
-        /* LOGIN SYSTEM */
         #loginOverlay { position: fixed; inset: 0; z-index: 9999; background: var(--bg); display: flex; justify-content: center; align-items: center; }
-        .login-card { background: var(--card-bg); padding: 40px; border-radius: 24px; width: 340px; border: 1px solid var(--border); text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .login-card { background: var(--card-bg); padding: 40px; border-radius: 24px; width: 340px; border: 1px solid var(--border); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
         #dashboard { display: none; height: 100vh; }
         .sidebar { width: 260px; background: var(--card-bg); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
         .main-content { flex: 1; padding: 0 30px 30px 30px; overflow-y: auto; scroll-behavior: smooth; }
         
-        /* NEWS TICKER */
         .ticker-wrap { background: var(--card-bg); border-bottom: 1px solid var(--border); overflow: hidden; white-space: nowrap; padding: 12px 0; margin-bottom: 20px; position: sticky; top: 0; z-index: 10; }
-        .ticker { display: inline-block; animation: marquee 25s linear infinite; font-weight: 700; color: var(--primary); font-size: 13px; }
+        .ticker { display: inline-block; animation: marquee 30s linear infinite; font-weight: 700; color: var(--primary); font-size: 13px; }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* UI COMPONENTS */
-        .card { background: var(--card-bg); border-radius: 18px; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; }
+        .card { background: var(--card-bg); border-radius: 18px; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; position: relative; }
         .nav-item { padding: 12px; cursor: pointer; border-radius: 10px; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; transition: 0.2s; }
         .nav-item.active { background: var(--primary); color: white; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); box-sizing: border-box; outline: none; font-weight: 500; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); box-sizing: border-box; outline: none; }
         .btn-pro { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-weight: 700; transition: 0.2s; }
-        .btn-pro:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-sm { padding: 8px 14px; font-size: 10px; width: auto; font-weight: 800; border-radius: 8px; cursor: pointer; border: none; margin-left: 5px; color: white; text-transform: uppercase; }
         
-        /* MARKET GRID */
         .svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
         .svc-card { background: var(--card-bg); border: 1px solid var(--border); padding: 15px 10px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .svc-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(55,125,255,0.1); }
-        .svc-card.active { border-color: var(--primary); background: rgba(55,125,255,0.05); border-width: 2px; }
         .svc-card img { width: 40px; height: 40px; margin-bottom: 8px; border-radius: 10px; object-fit: cover; }
+        .svc-card.active { border-color: var(--primary); background: rgba(55,125,255,0.05); border-width: 2px; }
         
-        .otp-badge { background: var(--success); color: white; padding: 6px 14px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-weight: bold; letter-spacing: 1px; }
+        .otp-badge { background: var(--success); color: white; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-family: monospace; }
         .hidden { display: none !important; }
         
-        /* ADMIN BLOCKS */
-        .admin-block { border: 1px solid var(--gold); padding: 20px; border-radius: 18px; margin-bottom: 25px; position: relative; background: rgba(241, 196, 15, 0.03); }
+        .admin-block { border: 1px solid var(--gold); padding: 20px; border-radius: 18px; margin-bottom: 25px; position: relative; background: rgba(241, 196, 15, 0.02); }
         .admin-label { position: absolute; top: -12px; left: 15px; background: var(--gold); color: black; font-size: 10px; padding: 3px 12px; border-radius: 6px; font-weight: 900; }
         .flex-between { display: flex; justify-content: space-between; align-items: center; }
     </style>
@@ -58,8 +51,8 @@
 
 <div id="loginOverlay">
     <div class="login-card">
-        <h2 style="color: var(--primary); margin-bottom: 5px;">S-PANEL v22</h2>
-        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 25px;">Enter credentials to access your account</p>
+        <h2 style="color: var(--primary); margin-bottom: 5px;">S-PANEL v24</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Master Dashboard</p>
         <input type="text" id="loginKey" placeholder="Username">
         <input type="password" id="loginPass" placeholder="Password">
         <button class="btn-pro" style="margin-top: 10px;" onclick="auth()">Sign In</button>
@@ -68,12 +61,12 @@
 
 <div id="dashboard">
     <aside class="sidebar">
-        <div style="font-weight: 900; color: var(--primary); font-size: 24px; margin-bottom: 25px; letter-spacing: -1px;">⚡ S-PANEL</div>
+        <div style="font-weight: 900; color: var(--primary); font-size: 24px; margin-bottom: 25px;">⚡ S-PANEL</div>
         
         <div style="background: var(--primary); color: white; padding: 22px; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(55,125,255,0.2);">
-            <div style="font-size: 10px; opacity: 0.8; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Balance Available</div>
-            <div style="font-size: 32px; font-weight: 900; margin: 4px 0;">$<span id="balDisplay">0.00</span></div>
-            <div id="userDisplay" style="font-size: 11px; opacity: 0.9; font-weight: 600; background: rgba(0,0,0,0.1); display: inline-block; padding: 2px 8px; border-radius: 5px;">User: ---</div>
+            <div style="font-size: 10px; opacity: 0.8; font-weight: 800; text-transform: uppercase;">Balance</div>
+            <div style="font-size: 32px; font-weight: 900;">$<span id="balDisplay">0.00</span></div>
+            <div id="userDisplay" style="font-size: 11px; opacity: 0.9; font-weight: 600;">User: ---</div>
         </div>
 
         <nav id="navMenu" style="flex-grow: 1;">
@@ -82,46 +75,41 @@
             <div class="nav-item" onclick="show('logs', this)">📜 Order Logs</div>
         </nav>
 
-        <button class="btn-pro" style="background:var(--gold); color:black; margin-bottom: 10px;" onclick="toggleTheme()">🌓 Dark / Light</button>
+        <button class="btn-pro" style="background:var(--gold); color:black; margin-bottom: 10px;" onclick="toggleTheme()">🌓 Theme</button>
         <button class="btn-pro" style="background:var(--danger);" onclick="location.reload()">Log Out</button>
     </aside>
 
     <main class="main-content">
         <div class="ticker-wrap">
-            <div class="ticker" id="newsTicker">Loading announcements...</div>
+            <div class="ticker" id="newsTicker">Welcome to S-PANEL! Loading updates...</div>
         </div>
 
         <div id="page-market">
-            <h2>Select Service</h2>
+            <h2 id="marketTop">Numbers</h2>
             <div class="card">
-                <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">1. Choose Country</label>
                 <select id="countrySelect" onchange="refreshMarket()"></select>
-                
-                <label style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-top: 15px; display: block;">2. Select Application</label>
-                <div id="svcGrid" class="svc-grid" style="margin-top: 10px;"></div>
-                
+                <div id="svcGrid" class="svc-grid" style="margin-top: 15px;"></div>
                 <div id="buyBtnArea" style="margin-top: 25px;"></div>
             </div>
-            <h3>Active Numbers</h3>
+            <h3>Active Sessions</h3>
             <div id="activeSessions"></div>
         </div>
 
         <div id="page-funds" class="hidden">
             <h2>Add Funds</h2>
             <div class="card" style="border: 2px solid var(--gold);">
-                <h3>🎁 Promo Code</h3>
+                <h3>🎁 Use Promo Code</h3>
                 <input type="text" id="promoInp" placeholder="Enter Gift Code">
-                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="redeemPromo()">Redeem Balance</button>
+                <button class="btn-pro" style="background:var(--gold); color:black;" onclick="redeemPromo()">Claim Balance</button>
             </div>
             <div class="card">
-                <h3>Deposit via UPI</h3>
-                <div style="background:var(--bg); padding:20px; border-radius:15px; margin-bottom:15px; text-align: center;">
-                    <div style="margin-bottom: 10px;">Send to: <b id="payUpi" style="color: var(--primary);">admin@upi</b></div>
-                    <img id="payQr" style="width:140px; border-radius:12px; border: 4px solid white;" src="https://via.placeholder.com/150?text=Scan+to+Pay">
+                <h3>Deposit Proof</h3>
+                <div style="background:var(--bg); padding:15px; border-radius:12px; margin-bottom:15px;">
+                    <div>UPI: <b id="payUpi" style="color:var(--primary)"></b></div>
                 </div>
-                <input type="number" id="txAmt" placeholder="Amount to Add ($)">
-                <input type="text" id="txId" placeholder="Transaction ID / Ref No">
-                <button class="btn-pro" onclick="requestFund()">Submit Payment Proof</button>
+                <input type="number" id="txAmt" placeholder="Amount ($)">
+                <input type="text" id="txId" placeholder="Transaction ID">
+                <button class="btn-pro" onclick="requestFund()">Submit for Approval</button>
             </div>
         </div>
 
@@ -131,38 +119,41 @@
         </div>
 
         <div id="page-admin" class="hidden">
-            <h2 style="color:var(--gold)">🛡️ Admin God-Mode</h2>
+            <h2 style="color:var(--gold)">🛡️ God-Mode (sh1vx)</h2>
             
             <div class="admin-block">
-                <div class="admin-label">BROADCAST SYSTEM</div>
-                <input type="text" id="admNews" placeholder="Update scrolling ticker message...">
-                <button class="btn-pro" style="background:var(--primary)" onclick="updateNews()">Update News Ticker</button>
+                <div class="admin-label">PROMO GENERATOR</div>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="admPCode" placeholder="Code (e.g. JOIN2)">
+                    <input type="number" id="admPVal" placeholder="Value ($)">
+                </div>
+                <button class="btn-pro" style="background:var(--gold); color:black; margin-top:10px;" onclick="generatePromo()">Create Gift Code</button>
+                <div style="margin-top:15px; font-size: 11px;">
+                    <b>Recent Promo Usage:</b>
+                    <div id="admPromoLogs" style="max-height: 100px; overflow-y: auto; color: var(--text-muted); padding: 5px;"></div>
+                </div>
             </div>
 
             <div class="admin-block">
-                <div class="admin-label">USER FUNDING (BY USERNAME)</div>
-                <input type="text" id="admSearchUser" placeholder="Enter Username (e.g. sam)">
-                <button class="btn-pro" style="margin-bottom: 10px;" onclick="trackByUser()">Search Account</button>
+                <div class="admin-label">USER FUNDING (ALL USERS)</div>
+                <input type="text" id="admSearchUser" placeholder="Enter Any Username">
+                <button class="btn-pro" style="margin-bottom: 10px;" onclick="trackByUser()">Search Database</button>
                 <div id="userControl" class="hidden">
-                    <div id="userInfoDisplay" style="margin-bottom:10px; font-weight:bold; color: var(--primary);"></div>
-                    <input type="number" id="admModAmt" placeholder="Amount (e.g. 5 or -5)">
-                    <button class="btn-pro" style="background:var(--success)" onclick="executeUserFund()">Confirm & Update</button>
+                    <div id="userInfoDisplay" style="margin-bottom:10px; font-weight:bold; color:var(--primary);"></div>
+                    <input type="number" id="admModAmt" placeholder="Amount to Add/Subtract">
+                    <button class="btn-pro" style="background:var(--success)" onclick="executeUserFund()">Confirm Update</button>
                 </div>
             </div>
 
             <div class="admin-block">
-                <div class="admin-label">GLOBAL SETTINGS</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <input type="text" id="admSName" placeholder="App Name">
-                    <input type="number" id="admSPrice" placeholder="Price ($)">
-                </div>
-                <button class="btn-pro" style="margin-bottom: 15px;" onclick="manageGlobalSvc()">Save/Update Service</button>
-                <hr style="border:0; border-top:1px solid var(--border); margin-bottom: 15px;">
-                <input type="text" id="admUpi" placeholder="Set Main UPI ID">
-                <button class="btn-pro" onclick="updateAdminPay()">Update Payment Info</button>
+                <div class="admin-label">BROADCAST & SETTINGS</div>
+                <input type="text" id="admNews" placeholder="Ticker Announcement Message">
+                <button class="btn-pro" style="margin-bottom:15px;" onclick="updateNews()">Update Ticker</button>
+                <input type="text" id="admUpi" placeholder="Set Global UPI ID">
+                <button class="btn-pro" onclick="updateAdminPay()">Set UPI</button>
             </div>
 
-            <h3>Deposit Requests</h3>
+            <h3>Pending Approvals</h3>
             <div id="adminApprovalList"></div>
         </div>
     </main>
@@ -171,40 +162,36 @@
 <script>
     let currentUser = null;
     let activeTimers = {};
-    let db = JSON.parse(localStorage.getItem('spanel_v22_db')) || {
+    let db = JSON.parse(localStorage.getItem('spanel_v24_db')) || {
         users: {}, 
         services: [
             { name: 'Telegram', price: 0.65, img: 'https://cdn-icons-png.flaticon.com/512/2111/2111646.png' },
             { name: 'WhatsApp', price: 0.80, img: 'https://cdn-icons-png.flaticon.com/512/733/733585.png' },
             { name: 'Instagram', price: 0.50, img: 'https://cdn-icons-png.flaticon.com/512/174/174855.png' },
             { name: 'ChatGPT', price: 1.20, img: 'https://cdn-icons-png.flaticon.com/512/12222/12222588.png' },
-            { name: 'Netflix', price: 2.10, img: 'https://cdn-icons-png.flaticon.com/512/5977/5977590.png' }
+            { name: 'Netflix', price: 2.30, img: 'https://cdn-icons-png.flaticon.com/512/5977/5977590.png' }
         ],
         countries: [
             { name: 'India', code: '+91' }, { name: 'USA', code: '+1' }, 
-            { name: 'UK', code: '+44' }, { name: 'Russia', code: '+7' },
-            { name: 'Brazil', code: '+55' }
+            { name: 'UK', code: '+44' }, { name: 'Russia', code: '+7' }
         ],
         pay: { upi: "admin@upi" },
-        pending: [], promos: {}, news: "Welcome to S-PANEL v22! High-quality OTP numbers are now in stock for all services."
+        pending: [], promos: {}, promoUsage: [], news: "Welcome to S-PANEL v24! Fast OTP services are now active."
     };
 
     function auth() {
         let user = document.getElementById('loginKey').value.trim().toLowerCase();
-        if(!user) return alert("Enter a username");
-        
+        if(!user) return alert("Username required");
         if(!db.users[user]) {
-            db.users[user] = { balance: (user === "sh1vx") ? 18.70 : 0.00, history: [] };
+            db.users[user] = { balance: (user === "sh1vx") ? 100.00 : 0.00, history: [] };
         }
         currentUser = user;
         save();
-        
         if(currentUser === "sh1vx") {
             if(!document.getElementById('admTab')) {
                 document.getElementById('navMenu').innerHTML += `<div id="admTab" class="nav-item" style="color:var(--gold); border: 1px dashed var(--gold); margin-top:10px;" onclick="show('admin', this)">🛡️ God-Mode</div>`;
             }
         }
-        
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('dashboard').style.display = 'flex';
         document.getElementById('userDisplay').innerText = "User: " + currentUser;
@@ -218,26 +205,57 @@
         refreshMarket(); updateBal();
     }
 
-    /* --- MARKET & PURCHASE LOGIC --- */
+    /* ADMIN TOOLS */
+    function generatePromo() {
+        const code = document.getElementById('admPCode').value.trim().toUpperCase();
+        const val = parseFloat(document.getElementById('admPVal').value);
+        if(code && !isNaN(val)) {
+            db.promos[code] = val;
+            save(); alert(`Code ${code} ($${val}) is now LIVE.`);
+            document.getElementById('admPCode').value = ""; document.getElementById('admPVal').value = "";
+        }
+    }
+
+    function trackByUser() {
+        const user = document.getElementById('admSearchUser').value.trim().toLowerCase();
+        const display = document.getElementById('userControl');
+        if(db.users[user]) {
+            display.classList.remove('hidden');
+            let b = parseFloat(db.users[user].balance) || 0;
+            document.getElementById('userInfoDisplay').innerHTML = `User Found: ${user} | Bal: $${b.toFixed(2)}`;
+        } else { alert("No user found by that name."); }
+    }
+
+    function executeUserFund() {
+        const user = document.getElementById('admSearchUser').value.trim().toLowerCase();
+        const amt = parseFloat(document.getElementById('admModAmt').value);
+        if(db.users[user] && !isNaN(amt)) {
+            db.users[user].balance = (parseFloat(db.users[user].balance || 0) + amt).toFixed(2);
+            save(); trackByUser(); if(currentUser === user) updateBal();
+            alert("Balance Updated.");
+        }
+    }
+
+    /* MARKET LOGIC */
     function refreshMarket() {
         document.getElementById('svcGrid').innerHTML = db.services.map((s, i) => `
             <div class="svc-card" onclick="selectSvc(${i}, this)">
                 <img src="${s.img}">
                 <div style="font-size:11px; font-weight:800;">${s.name}</div>
-                <div style="font-size:10px; color:var(--primary); font-weight:bold;">$${parseFloat(s.price).toFixed(2)}</div>
+                <div style="font-size:10px; color:var(--primary);">$${parseFloat(s.price).toFixed(2)}</div>
             </div>`).join('');
     }
 
     function selectSvc(i, el) {
         document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
-        document.getElementById('buyBtnArea').innerHTML = `<button class="btn-pro" onclick="buy(${i})">Get Code Now</button>`;
+        document.getElementById('buyBtnArea').innerHTML = `<button class="btn-pro" onclick="buy(${i})">Purchase Number</button>`;
     }
 
     function buy(i) {
         const s = db.services[i];
         let myBal = parseFloat(db.users[currentUser].balance) || 0;
-        if(myBal < s.price) return alert("Insufficient balance. Please add funds.");
+        if(myBal < s.price) return alert("Please add funds.");
         
         db.users[currentUser].balance = (myBal - s.price).toFixed(2);
         updateBal(); save();
@@ -248,7 +266,7 @@
         const div = document.createElement('div');
         div.className = 'card flex-between'; div.id = sid;
         div.innerHTML = `
-            <div id="stat-${sid}"><b>${phone}</b> <br><small style="color:var(--text-muted)">Waiting for SMS...</small></div>
+            <div id="stat-${sid}"><b>${phone}</b> <br><small style="color:var(--text-muted)">Connecting to API...</small></div>
             <div id="act-${sid}">
                 <button class="btn-sm" style="background:var(--primary)" onclick="purchaseAnother()">Buy Another</button>
                 <button class="btn-sm" style="background:var(--danger)" onclick="cancelSvc('${sid}', ${s.price})">Cancel</button>
@@ -260,120 +278,64 @@
             const otp = Math.floor(100000 + Math.random()*899999);
             document.getElementById('stat-'+sid).innerHTML = `<b>${phone}</b> <br><span class="otp-badge">${otp}</span>`;
             document.getElementById('act-'+sid).innerHTML = `<button class="btn-sm" style="background:var(--primary); width: 100%;" onclick="purchaseAnother()">Buy Another</button>`;
-            db.users[currentUser].history.unshift({ svc: s.name, num: phone, otp: otp, date: new Date().toLocaleString() });
+            db.users[currentUser].history.unshift({ svc: s.name, num: phone, otp: otp });
             save();
-        }, 8000);
+        }, 7000);
     }
 
     function cancelSvc(sid, refund) {
         clearTimeout(activeTimers[sid]);
-        let currentBal = parseFloat(db.users[currentUser].balance) || 0;
-        db.users[currentUser].balance = (currentBal + refund).toFixed(2);
+        db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + refund).toFixed(2);
         document.getElementById(sid).remove();
         updateBal(); save();
-        alert("Session cancelled. Funds refunded.");
     }
 
     function purchaseAnother() { document.getElementById('marketTop').scrollIntoView(); }
 
-    /* --- ADMIN LOGIC --- */
-    function updateNews() {
-        const text = document.getElementById('admNews').value.trim();
-        if(text) { db.news = text; save(); initUI(); alert("Broadcast Updated!"); }
-    }
-
-    function trackByUser() {
-        const user = document.getElementById('admSearchUser').value.trim().toLowerCase();
-        const display = document.getElementById('userControl');
-        if(db.users[user]) {
-            display.classList.remove('hidden');
-            let b = parseFloat(db.users[user].balance) || 0;
-            document.getElementById('userInfoDisplay').innerHTML = `User: ${user} | Current Bal: $${b.toFixed(2)}`;
-        } else { alert("User not found in database."); }
-    }
-
-    function executeUserFund() {
-        const user = document.getElementById('admSearchUser').value.trim().toLowerCase();
-        const amt = parseFloat(document.getElementById('admModAmt').value);
-        if(db.users[user] && !isNaN(amt)) {
-            db.users[user].balance = (parseFloat(db.users[user].balance || 0) + amt).toFixed(2);
-            save(); trackByUser(); 
-            if(currentUser === user) updateBal();
-            alert("Funds updated for " + user);
-        }
-    }
-
-    /* --- GENERAL NAVIGATION --- */
+    /* UI NAVIGATION */
     function show(p, el) {
         document.querySelectorAll('.main-content > div:not(.ticker-wrap)').forEach(d => d.classList.add('hidden'));
         document.getElementById('page-'+p).classList.remove('hidden');
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         el.classList.add('active');
         if(p === 'logs') {
-            document.getElementById('historyList').innerHTML = db.users[currentUser].history.map(h => `
-                <div class="card flex-between">
-                    <div><b>${h.svc}</b><br><small>${h.num}</small></div>
-                    <span class="otp-badge">${h.otp}</span>
-                </div>`).join('') || "No previous orders.";
+            document.getElementById('historyList').innerHTML = db.users[currentUser].history.map(h => `<div class="card flex-between"><div><b>${h.svc}</b><br><small>${h.num}</small></div><span class="otp-badge">${h.otp}</span></div>`).join('') || "No logs.";
         }
         if(p === 'admin') {
-            document.getElementById('adminApprovalList').innerHTML = db.pending.map((p, i) => `
-                <div class="card flex-between">
-                    <span><b>${p.user}</b> ($${p.amt})<br><small>TX: ${p.tx}</small></span>
-                    <button class="btn-sm" style="background:var(--success)" onclick="approve(${i})">Approve</button>
-                </div>`).join('') || "No pending deposits.";
+            document.getElementById('adminApprovalList').innerHTML = db.pending.map((p, i) => `<div class="card flex-between"><span><b>${p.user}</b> ($${p.amt})</span><button class="btn-sm" style="background:var(--success)" onclick="approve(${i})">Approve</button></div>`).join('') || "No requests.";
+            document.getElementById('admPromoLogs').innerHTML = db.promoUsage.map(l => `<div>• <b>${l.user}</b> used code <b>${l.code}</b> ($${l.amt})</div>`).join('') || "No usage yet.";
         }
     }
 
-    function updateBal() { 
-        let bal = parseFloat(db.users[currentUser].balance) || 0;
-        document.getElementById('balDisplay').innerText = bal.toFixed(2); 
-    }
+    function updateBal() { document.getElementById('balDisplay').innerText = parseFloat(db.users[currentUser].balance).toFixed(2); }
+    function save() { localStorage.setItem('spanel_v24_db', JSON.stringify(db)); }
+    function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
     
-    function save() { localStorage.setItem('spanel_v22_db', JSON.stringify(db)); }
-    
-    function toggleTheme() { 
-        document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); 
+    function redeemPromo() {
+        const c = document.getElementById('promoInp').value.trim().toUpperCase();
+        if(db.promos[c]) {
+            let gift = db.promos[c];
+            db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + gift).toFixed(2);
+            db.promoUsage.unshift({ user: currentUser, code: c, amt: gift });
+            delete db.promos[c]; // Single use
+            save(); updateBal(); alert("Redeemed! Gift added.");
+        } else { alert("Invalid or Expired Code."); }
     }
 
+    function updateNews() { db.news = document.getElementById('admNews').value; save(); initUI(); }
+    function updateAdminPay() { db.pay.upi = document.getElementById('admUpi').value; save(); initUI(); }
+    
     function requestFund() {
         const a = parseFloat(document.getElementById('txAmt').value);
         const t = document.getElementById('txId').value.trim();
-        if(a > 0 && t) { 
-            db.pending.push({ user: currentUser, amt: a, tx: t }); 
-            save(); alert("Request submitted to Admin."); 
-        }
+        if(a > 0 && t) { db.pending.push({ user: currentUser, amt: a, tx: t }); save(); alert("Sent to admin."); }
     }
-
+    
     function approve(i) {
         const p = db.pending[i];
         db.users[p.user].balance = (parseFloat(db.users[p.user].balance || 0) + p.amt).toFixed(2);
         db.pending.splice(i, 1);
         save(); updateBal(); show('admin', document.getElementById('admTab'));
-    }
-
-    function redeemPromo() {
-        const c = document.getElementById('promoInp').value.trim().toUpperCase();
-        if(db.promos[c]) {
-            db.users[currentUser].balance = (parseFloat(db.users[currentUser].balance) + db.promos[c]).toFixed(2);
-            delete db.promos[c]; save(); updateBal(); alert("Redeemed successfully!");
-        } else { alert("Invalid or expired code."); }
-    }
-
-    function updateAdminPay() { 
-        db.pay.upi = document.getElementById('admUpi').value || db.pay.upi; 
-        save(); initUI(); alert("Global Payment ID updated."); 
-    }
-
-    function manageGlobalSvc() {
-        const n = document.getElementById('admSName').value.trim();
-        const p = parseFloat(document.getElementById('admSPrice').value);
-        if(n && !isNaN(p)) {
-            const ex = db.services.find(s => s.name === n);
-            if(ex) ex.price = p; 
-            else db.services.push({ name: n, price: p, img: 'https://cdn-icons-png.flaticon.com/512/1150/1150592.png' });
-            save(); refreshMarket(); alert("Market service updated.");
-        }
     }
 </script>
 </body>
